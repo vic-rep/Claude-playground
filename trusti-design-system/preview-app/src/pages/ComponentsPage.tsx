@@ -93,8 +93,8 @@ function AlertDemo() {
 }
 
 function ButtonDemo() {
-  const iconArrow = <span aria-hidden="true" style={{ fontSize: 'inherit' }}>&rsaquo;</span>;
-  const iconHome = <span aria-hidden="true" style={{ fontSize: 'inherit' }}>&bull;</span>;
+  const iconArrow = <i className="fa-solid fa-chevron-right" aria-hidden="true" />;
+  const iconHome = <i className="fa-regular fa-house" aria-hidden="true" />;
   return (
     <Section title="Button" desc="Variants: primary, secondary, ghost, destructive. Sizes: sm, md, lg. Supports leading/trailing icons and icon-only.">
       <div className="label">Variants</div>
@@ -125,10 +125,10 @@ function ButtonDemo() {
       </div>
       <div className="label">Icon-only</div>
       <div className="demo" style={{ marginBottom: 12 }}>
-        <Button iconOnly size="sm">{iconHome}</Button>
-        <Button iconOnly size="md">{iconHome}</Button>
-        <Button iconOnly size="lg">{iconHome}</Button>
-        <Button iconOnly disabled>{iconHome}</Button>
+        <Button iconOnly size="sm"><i className="fa-regular fa-house" aria-hidden="true" /></Button>
+        <Button iconOnly size="md"><i className="fa-regular fa-house" aria-hidden="true" /></Button>
+        <Button iconOnly size="lg"><i className="fa-regular fa-house" aria-hidden="true" /></Button>
+        <Button iconOnly disabled><i className="fa-regular fa-house" aria-hidden="true" /></Button>
       </div>
       <div className="label">Full Width</div>
       <div className="demo">
