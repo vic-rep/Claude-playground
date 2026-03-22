@@ -43,13 +43,50 @@ function Section({ title, desc, children }: { title: string; desc: string; child
    ───────────────────────────────────────────────────────── */
 
 function AlertDemo() {
+  const noop = () => {};
   return (
-    <Section title="Alert" desc="Variant-based alerts: info, success, warning, destructive.">
+    <Section title="Alert" desc="Collapsible contextual alerts: info, success, warning, destructive. Click chevron to expand.">
       <div className="demo-vertical">
-        <Alert variant="info" title="Info">This is an informational alert.</Alert>
-        <Alert variant="success" title="Success">Operation completed successfully.</Alert>
-        <Alert variant="warning" title="Warning">Please review before proceeding.</Alert>
-        <Alert variant="destructive" title="Error">Something went wrong.</Alert>
+        <Alert variant="warning" title="Informational notification" />
+        <Alert
+          variant="warning"
+          title="Informational notification"
+          defaultExpanded
+          action={{ label: 'Button text', onClick: noop }}
+          linkAction={{ label: 'Button text', onClick: noop }}
+        >
+          Additional text goes here
+        </Alert>
+        <Alert variant="destructive" title="Informational notification" />
+        <Alert
+          variant="destructive"
+          title="Informational notification"
+          defaultExpanded
+          action={{ label: 'Button text', onClick: noop }}
+          linkAction={{ label: 'Button text', onClick: noop }}
+        >
+          Additional text goes here
+        </Alert>
+        <Alert variant="info" title="Informational notification" />
+        <Alert
+          variant="info"
+          title="Informational notification"
+          defaultExpanded
+          action={{ label: 'Button text', onClick: noop }}
+          linkAction={{ label: 'Button text', onClick: noop }}
+        >
+          Additional text goes here
+        </Alert>
+        <Alert variant="success" title="Informational notification" />
+        <Alert
+          variant="success"
+          title="Informational notification"
+          defaultExpanded
+          action={{ label: 'Button text', onClick: noop }}
+          linkAction={{ label: 'Button text', onClick: noop }}
+        >
+          Additional text goes here
+        </Alert>
       </div>
     </Section>
   );

@@ -14,7 +14,7 @@ export { Button } from './components/molecules/Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './components/molecules/Button';
 
 export { Alert } from './components/molecules/Alert';
-export type { AlertProps, AlertVariant } from './components/molecules/Alert';
+export type { AlertProps, AlertVariant, AlertAction } from './components/molecules/Alert';
 
 export { Checkbox } from './components/molecules/Checkbox';
 export type { CheckboxProps } from './components/molecules/Checkbox';
