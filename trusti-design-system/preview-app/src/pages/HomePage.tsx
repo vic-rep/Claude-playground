@@ -39,8 +39,8 @@ export function HomePage() {
         </p>
 
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-          <Link to="/tokens" className="home-cta home-cta--primary">
-            Explore Tokens
+          <Link to="/atoms" className="home-cta home-cta--primary">
+            Explore Atoms
           </Link>
           <Link to="/components" className="home-cta home-cta--secondary">
             View Components

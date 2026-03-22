@@ -30,8 +30,9 @@ import {
    ───────────────────────────────────────────────────────── */
 
 function Section({ title, desc, children }: { title: string; desc: string; children: React.ReactNode }) {
+  const anchorId = title.toLowerCase().replace(/\s+/g, '-');
   return (
-    <div className="component-card" style={{ marginBottom: 24 }}>
+    <div className="component-card" id={anchorId} style={{ marginBottom: 24, scrollMarginTop: 24 }}>
       <h3>{title}</h3>
       <p className="card-desc">{desc}</p>
       {children}
@@ -322,7 +323,7 @@ function SliderDemo() {
 
 function TabsDemo() {
   return (
-    <Section title="Tabs" desc="Tab navigation with controlled or uncontrolled modes.">
+    <Section title="Tabs" desc="Pill-style tab group with active, hover, and disabled states.">
       <Tabs
         tabs={[
           { id: 'overview', label: 'Overview' },

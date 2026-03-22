@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 
-/* Figma: ❖ Tabs — page 45:9, section 514:5259 */
+/* Figma: ❖ Tabs — page 45:9, Tab node 514:5436, TabGroup node 514:5451 */
 
-export interface Tab { id: string; label: string; icon?: React.ReactNode; disabled?: boolean; }
+export interface Tab {
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+}
 
 export interface TabsProps {
   tabs: Tab[];
@@ -13,8 +18,16 @@ export interface TabsProps {
   className?: string;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ tabs, defaultActiveId, activeId, onChange, className = '' }) => {
-  const [internalActive, setInternalActive] = useState(defaultActiveId || tabs[0]?.id);
+export const Tabs: React.FC<TabsProps> = ({
+  tabs,
+  defaultActiveId,
+  activeId,
+  onChange,
+  className = '',
+}) => {
+  const [internalActive, setInternalActive] = useState(
+    defaultActiveId || tabs[0]?.id
+  );
   const current = activeId ?? internalActive;
 
   const handleClick = (id: string) => {
@@ -23,7 +36,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, defaultActiveId, activeId, onC
   };
 
   return (
-    <div className={`${styles.tabs} ${className}`} role="tablist">
+    <div className={`${styles.tabGroup} ${className}`} role="tablist">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -32,6 +45,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, defaultActiveId, activeId, onC
           disabled={tab.disabled}
           className={`${styles.tab} ${current === tab.id ? styles.active : ''}`}
           onClick={() => handleClick(tab.id)}
+          type="button"
         >
           {tab.icon && <span className={styles.icon}>{tab.icon}</span>}
           {tab.label}

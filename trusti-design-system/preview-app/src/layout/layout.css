@@ -73,6 +73,31 @@
   background: var(--color-accent-600);
 }
 
+.sidebar-anchors {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0 4px 20px;
+  gap: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.sidebar-anchor {
+  display: block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 150ms ease;
+}
+
+.sidebar-anchor:hover {
+  color: rgba(255, 255, 255, 0.85);
+  border-left-color: var(--color-accent-600);
+}
+
 .sidebar-footer {
   padding: 16px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
