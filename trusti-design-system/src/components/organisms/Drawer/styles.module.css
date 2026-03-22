@@ -1,0 +1,23 @@
+.overlay {
+  position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 200ms ease;
+}
+.drawer {
+  position: fixed; background: var(--bg-card); box-shadow: var(--elevation-level5);
+  display: flex; flex-direction: column; overflow: hidden; z-index: 101;
+}
+.right { top: 0; right: 0; height: 100vh; animation: slideInRight 250ms ease; }
+.left { top: 0; left: 0; height: 100vh; animation: slideInLeft 250ms ease; }
+.bottom { bottom: 0; left: 0; width: 100vw; border-radius: var(--radius-l) var(--radius-l) 0 0; animation: slideInUp 250ms ease; }
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-l) var(--space-xl); border-bottom: 1px solid var(--border-default); flex-shrink: 0;
+}
+.title { font-size: var(--font-size-h6); font-weight: 600; }
+.close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-s); color: var(--text-secondary); }
+.close:hover { background: var(--color-primary-100); }
+.body { flex: 1; overflow-y: auto; padding: var(--space-xl); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes slideInUp { from { transform: translateY(100%); } to { transform: translateY(0); } }

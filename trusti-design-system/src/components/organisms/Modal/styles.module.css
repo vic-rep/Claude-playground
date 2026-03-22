@@ -1,0 +1,28 @@
+.dialog {
+  border: none; border-radius: var(--radius-l); padding: 0;
+  box-shadow: var(--elevation-level4); background: var(--bg-card);
+  max-height: 85vh; overflow: visible;
+}
+.dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
+.sm { width: min(400px, 90vw); }
+.md { width: min(560px, 90vw); }
+.lg { width: min(780px, 90vw); }
+.fullscreen { width: 100vw; height: 100vh; max-height: 100vh; border-radius: 0; }
+.content { display: flex; flex-direction: column; max-height: 85vh; }
+.fullscreen .content { max-height: 100vh; }
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-l) var(--space-xl); border-bottom: 1px solid var(--border-default); flex-shrink: 0;
+}
+.title { font-size: var(--font-size-h5); font-weight: 600; color: var(--text-primary); }
+.close {
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-s); color: var(--text-secondary); font-size: 16px;
+  transition: background var(--transition-fast);
+}
+.close:hover { background: var(--color-primary-100); }
+.body { padding: var(--space-xl); overflow-y: auto; flex: 1; }
+.footer {
+  display: flex; justify-content: flex-end; gap: var(--space-m);
+  padding: var(--space-l) var(--space-xl); border-top: 1px solid var(--border-default); flex-shrink: 0;
+}

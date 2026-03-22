@@ -1,0 +1,14 @@
+.tag {
+  display: inline-flex; align-items: center; gap: var(--space-xs);
+  padding: var(--space-xxs) var(--space-s); border-radius: var(--radius-s);
+  font-size: var(--font-size-text-small); line-height: 1.4;
+}
+.default { background: var(--color-primary-100); color: var(--text-primary); }
+.accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.text { white-space: nowrap; }
+.remove {
+  display: flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: var(--radius-xs);
+  font-size: 10px; color: inherit; opacity: 0.6; transition: opacity var(--transition-fast);
+}
+.remove:hover { opacity: 1; }

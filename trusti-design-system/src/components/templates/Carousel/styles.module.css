@@ -1,0 +1,23 @@
+.carousel { position: relative; width: 100%; overflow: hidden; }
+.viewport { overflow: hidden; border-radius: var(--radius-l); }
+.track { display: flex; transition: transform var(--transition-slow); }
+.slide { flex: 0 0 100%; min-width: 0; }
+.arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bg-card); box-shadow: var(--elevation-level2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+.arrow:hover { box-shadow: var(--elevation-level3); background: var(--color-primary-100); }
+.arrow:focus-visible { outline: 2px solid var(--interactive-primary); outline-offset: 2px; }
+.prev { left: var(--space-m); }
+.next { right: var(--space-m); }
+.dots { display: flex; justify-content: center; gap: var(--space-s); padding-top: var(--space-l); }
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-primary-300); transition: all var(--transition-fast);
+}
+.dot:hover { background: var(--color-primary-500); }
+.activeDot { background: var(--interactive-primary); width: 24px; border-radius: var(--radius-full); }

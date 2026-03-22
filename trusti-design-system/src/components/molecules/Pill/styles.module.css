@@ -1,0 +1,15 @@
+.pill {
+  display: inline-flex; align-items: center; padding: var(--space-xs) var(--space-m);
+  border-radius: var(--radius-full); font-size: var(--font-size-text-small); font-weight: 500;
+  line-height: 1; white-space: nowrap; border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+.default { background: var(--color-primary-100); color: var(--text-primary); border-color: var(--color-primary-200); }
+.accent { background: var(--color-accent-100); color: var(--color-accent-800); border-color: var(--color-accent-200); }
+.success { background: var(--color-success-100); color: var(--color-success-800); border-color: var(--color-success-200); }
+.warning { background: var(--color-warning-100); color: var(--color-warning-600); border-color: var(--color-warning-200); }
+.destructive { background: var(--color-destructive-100); color: var(--color-destructive-600); border-color: var(--color-destructive-200); }
+.selected { border-color: currentColor; font-weight: 600; }
+.interactive { cursor: pointer; }
+.interactive:hover { opacity: 0.85; }
+.interactive:focus-visible { outline: 2px solid var(--interactive-primary); outline-offset: 2px; }

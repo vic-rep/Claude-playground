@@ -1,0 +1,20 @@
+.wrapper { display: flex; flex-direction: column; gap: var(--space-xs); }
+.header { display: flex; justify-content: space-between; }
+.label { font-size: var(--font-size-text-small); font-weight: 500; color: var(--text-primary); }
+.value { font-size: var(--font-size-text-small); font-weight: 600; color: var(--interactive-primary); }
+.slider {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+  border-radius: var(--radius-full); outline: none; cursor: pointer;
+  background: linear-gradient(to right, var(--interactive-primary) var(--pct, 50%), var(--color-primary-200) var(--pct, 50%));
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
+  border-radius: 50%; background: var(--color-constant-white); border: 2px solid var(--interactive-primary);
+  box-shadow: var(--elevation-level1); cursor: pointer; transition: box-shadow var(--transition-fast);
+}
+.slider::-webkit-slider-thumb:hover { box-shadow: var(--elevation-level2); }
+.slider::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%; background: var(--color-constant-white);
+  border: 2px solid var(--interactive-primary); box-shadow: var(--elevation-level1); cursor: pointer;
+}
+.slider:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--interactive-primary); outline-offset: 2px; }

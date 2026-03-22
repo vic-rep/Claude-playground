@@ -1,0 +1,15 @@
+.pagination { display: flex; align-items: center; gap: var(--space-xs); }
+.page, .arrow {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; border-radius: var(--radius-m);
+  font-size: var(--font-size-text-default); color: var(--text-primary);
+  transition: all var(--transition-fast); padding: 0 var(--space-xs);
+}
+.page:hover:not(:disabled) { background: var(--color-primary-100); }
+.active { background: var(--interactive-primary); color: var(--color-constant-white); font-weight: 600; }
+.active:hover { background: var(--interactive-hover); }
+.arrow { font-size: 20px; color: var(--text-secondary); }
+.arrow:hover:not(:disabled) { background: var(--color-primary-100); }
+.arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.ellipsis { display: flex; align-items: center; justify-content: center; min-width: 36px; color: var(--text-tertiary); }
+.page:focus-visible, .arrow:focus-visible { outline: 2px solid var(--interactive-primary); outline-offset: 2px; }

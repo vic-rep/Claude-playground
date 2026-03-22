@@ -1,0 +1,15 @@
+.wrapper { display: flex; align-items: center; gap: var(--space-s); cursor: pointer; }
+.input { position: absolute; opacity: 0; width: 0; height: 0; }
+.track {
+  width: 44px; height: 24px; border-radius: var(--radius-full); background: var(--color-primary-300);
+  padding: 2px; display: flex; align-items: center; transition: background var(--transition-fast); flex-shrink: 0;
+}
+.thumb {
+  width: 20px; height: 20px; border-radius: 50%; background: var(--color-constant-white);
+  box-shadow: var(--elevation-level1); transition: transform var(--transition-fast);
+}
+.input:checked + .track { background: var(--interactive-primary); }
+.input:checked + .track .thumb { transform: translateX(20px); }
+.input:focus-visible + .track { outline: 2px solid var(--interactive-primary); outline-offset: 2px; }
+.input:disabled + .track { opacity: 0.5; cursor: not-allowed; }
+.label { font-size: var(--font-size-text-default); color: var(--text-primary); }
