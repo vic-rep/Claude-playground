@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage';
 import { AtomsPage } from './pages/AtomsPage';
 import { ComponentsPage } from './pages/ComponentsPage';
 import { PrototypesPage } from './pages/PrototypesPage';
+import { SmsCampaignApp } from './pages/SmsCampaignApp';
 
 export function App() {
   return (
@@ -13,6 +14,7 @@ export function App() {
         <Route path="/atoms" element={<AtomsPage />} />
         <Route path="/components" element={<ComponentsPage />} />
         <Route path="/prototypes" element={<PrototypesPage />} />
+        <Route path="/prototypes/sms-campaigns" element={<SmsCampaignApp />} />
       </Routes>
     </Layout>
   );

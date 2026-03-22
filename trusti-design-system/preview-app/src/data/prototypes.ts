@@ -34,4 +34,13 @@ export const prototypes: Prototype[] = [
     tags: ['Dashboard', 'Cards', 'Data'],
     status: 'planned',
   },
+  {
+    id: 'sms-campaigns',
+    title: 'SMS Campaign Manager',
+    description:
+      'Marketing tool for creating and sending SMS campaigns. Includes campaign editor with Bulgarian telecom-compliant character limits (GSM 7-bit / UCS-2), live phone preview, audience segment management, scheduling, and delivery statistics.',
+    tags: ['Marketing', 'SMS', 'Dashboard', 'Forms'],
+    route: '/prototypes/sms-campaigns',
+    status: 'live',
+  },
 ];
