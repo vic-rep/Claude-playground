@@ -23,7 +23,10 @@ import {
   FAQ,
   Carousel,
   VehicleDetailsCard,
+  getLogosByCategory,
+  getLogoCategories,
 } from '@trusti/design-system';
+import type { LogoCategory } from '@trusti/design-system';
 
 /* ─────────────────────────────────────────────────────────
    Helpers
@@ -186,14 +189,49 @@ function InputDemo() {
   );
 }
 
+const categoryLabels: Record<LogoCategory, string> = {
+  company: 'Company Logos',
+  delivery: 'Delivery Logos',
+  payment: 'Payment Logos',
+  car: 'Car Logos',
+  partnership: 'Partnership Logos',
+};
+
 function LogoDemo() {
   return (
-    <Section title="Logo" desc="Brand logo component in sm, md, lg sizes.">
-      <div className="demo">
+    <Section title="Logo" desc="Logo component with registry lookup by name, supporting color and grayscale variants across 5 categories.">
+      <div className="label">Sizes (using src prop)</div>
+      <div className="demo" style={{ marginBottom: 16 }}>
         <Logo src="https://placehold.co/120x40/F76803/FFFFFF?text=Trusti" alt="Trusti" size="sm" />
         <Logo src="https://placehold.co/160x50/F76803/FFFFFF?text=Trusti" alt="Trusti" size="md" />
         <Logo src="https://placehold.co/200x60/F76803/FFFFFF?text=Trusti" alt="Trusti" size="lg" />
       </div>
+
+      {getLogoCategories().map((cat) => {
+        const logos = getLogosByCategory(cat);
+        return (
+          <div key={cat} style={{ marginBottom: 24 }}>
+            <div className="label">{categoryLabels[cat]} ({logos.length})</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 8 }}>
+              {logos.map((l) => (
+                <div key={l.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 80 }}>
+                  <Logo name={l.name} variant="color" size="md" />
+                  <span style={{ fontSize: 10, color: 'var(--color-primary-400)' }}>{l.name}</span>
+                </div>
+              ))}
+            </div>
+            <div className="label" style={{ fontSize: 11, marginTop: 4 }}>Grayscale</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+              {logos.map((l) => (
+                <div key={l.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 80 }}>
+                  <Logo name={l.name} variant="grayscale" size="md" />
+                  <span style={{ fontSize: 10, color: 'var(--color-primary-400)' }}>{l.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </Section>
   );
 }
@@ -255,7 +293,7 @@ function RadioDemo() {
           label="Speedy"
           checked={thumbVal === 'speedy'}
           onChange={setThumbVal}
-          logo={<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Speedy_logo.svg/120px-Speedy_logo.svg.png" alt="Speedy" style={{ height: 24, objectFit: 'contain' }} />}
+          logo={<Logo name="Speedy" variant="color" size="sm" />}
           disclaimer="2,00 лв / 1,02 €"
         />
         <RadioThumb
@@ -264,7 +302,7 @@ function RadioDemo() {
           label="Econt"
           checked={thumbVal === 'econt'}
           onChange={setThumbVal}
-          logo={<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Econt_Express_logo.svg/120px-Econt_Express_logo.svg.png" alt="Econt" style={{ height: 24, objectFit: 'contain' }} />}
+          logo={<Logo name="Ekont" variant="color" size="sm" />}
           disclaimer="3,50 лв / 1,79 €"
         />
         <RadioThumb

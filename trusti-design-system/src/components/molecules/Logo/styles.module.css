@@ -2,3 +2,20 @@
 .sm { height: 24px; }
 .md { height: 36px; }
 .lg { height: 48px; }
+
+.placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary-400);
+  background: var(--color-surface-adjacent);
+  border-radius: var(--radius-xs);
+  padding: 0 var(--spacing-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}

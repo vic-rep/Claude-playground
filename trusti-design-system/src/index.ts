@@ -58,6 +58,15 @@ export type { ContextMenuProps, ContextMenuItem } from './components/molecules/C
 export { Logo } from './components/molecules/Logo';
 export type { LogoProps, LogoSize } from './components/molecules/Logo';
 
+// ── Logo Assets ─────────────────────────────────────────────
+export {
+  logoRegistry,
+  getLogosByCategory,
+  getAllLogoNames,
+  getLogoCategories,
+} from './assets/logos';
+export type { LogoCategory, LogoVariant, LogoEntry } from './assets/logos';
+
 // ── Organisms ──────────────────────────────────────────────
 export { Modal } from './components/organisms/Modal';
 export type { ModalProps, ModalSize } from './components/organisms/Modal';
