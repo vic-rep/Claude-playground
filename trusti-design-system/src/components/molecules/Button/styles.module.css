@@ -1,68 +1,177 @@
+/* ═══════════════════════════════════════════════════════════
+   Button — Figma node 108:2107
+   Types: Primary, Secondary, Ghost (Link), Destructive, Icon
+   Sizes: sm (32px), md (40px), lg (48px)
+   ═══════════════════════════════════════════════════════════ */
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-s);
+  gap: var(--space-m);
   border-radius: var(--radius-m);
   font-family: var(--font-family-primary);
-  font-weight: 600;
-  line-height: 1;
+  font-size: var(--font-size-text-small);
+  font-weight: 500;
+  line-height: var(--line-height-default);
   cursor: pointer;
-  transition: background var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity var(--transition-fast);
   white-space: nowrap;
   border: 1px solid transparent;
-}
-
-.button:focus-visible {
-  outline: 2px solid var(--interactive-primary);
-  outline-offset: 2px;
-}
-
-.button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
+  position: relative;
 }
 
 /* ── Sizes ──────────────────────────────────────────────── */
-.sm { padding: var(--space-xs) var(--space-m); font-size: var(--font-size-text-small); height: 32px; }
-.md { padding: var(--space-s) var(--space-l); font-size: var(--font-size-text-default); height: 40px; }
-.lg { padding: var(--space-m) var(--space-xl); font-size: var(--font-size-text-large); height: 48px; }
 
-/* ── Variants ───────────────────────────────────────────── */
+.sm {
+  padding: var(--space-xs) var(--space-s);
+  height: 32px;
+}
+
+.md {
+  padding: var(--space-s) var(--space-l);
+  height: 40px;
+}
+
+.lg {
+  padding: var(--space-m) var(--space-xl);
+  height: 48px;
+}
+
+/* ── Primary ───────────────────────────────────────────── */
+
 .primary {
-  background: var(--interactive-primary);
+  background: var(--color-accent-600);
   color: var(--color-constant-white);
 }
-.primary:hover:not(:disabled) { background: var(--interactive-hover); }
-.primary:active:not(:disabled) { background: var(--interactive-active); }
+
+.primary:hover:not(:disabled) {
+  background: var(--color-accent-500);
+}
+
+.primary:active:not(:disabled) {
+  background: var(--color-accent-500);
+}
+
+.primary:focus-visible {
+  outline: none;
+  border-color: var(--color-accent-700);
+  box-shadow: 0 0 0 1px var(--color-accent-700);
+}
+
+.primary:disabled {
+  background: var(--color-surface-adjacent2);
+  color: var(--color-constant-white);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* ── Secondary ─────────────────────────────────────────── */
 
 .secondary {
-  background: transparent;
-  color: var(--interactive-primary);
-  border-color: var(--interactive-primary);
+  background: var(--color-constant-white);
+  color: var(--color-constant-black);
+  border-color: var(--color-constant-black);
 }
-.secondary:hover:not(:disabled) { background: var(--interactive-subtle); }
-.secondary:active:not(:disabled) { background: var(--color-accent-200); }
+
+.secondary:hover:not(:disabled) {
+  background: var(--color-surface);
+}
+
+.secondary:active:not(:disabled) {
+  background: var(--color-surface);
+}
+
+.secondary:focus-visible {
+  outline: none;
+  border-color: var(--color-accent-700);
+  box-shadow: 0 0 0 1px var(--color-accent-700);
+}
+
+.secondary:disabled {
+  background: var(--color-surface-adjacent2);
+  border-color: var(--color-constant-black);
+  cursor: not-allowed;
+  opacity: 0.2;
+}
+
+/* ── Ghost (Figma: Link) ───────────────────────────────── */
 
 .ghost {
   background: transparent;
   color: var(--text-primary);
+  border-color: transparent;
 }
-.ghost:hover:not(:disabled) { background: var(--color-primary-100); }
-.ghost:active:not(:disabled) { background: var(--color-primary-200); }
+
+.ghost:hover:not(:disabled) {
+  color: var(--color-accent-600);
+}
+
+.ghost:active:not(:disabled) {
+  color: var(--color-accent-600);
+}
+
+.ghost:focus-visible {
+  outline: none;
+  color: var(--text-primary);
+  box-shadow: 0 0 0 1px var(--color-accent-700);
+}
+
+.ghost:disabled {
+  cursor: not-allowed;
+  opacity: 0.2;
+}
+
+/* Icon color for ghost variant */
+.ghost .icon {
+  color: var(--color-accent-600);
+}
+
+/* ── Destructive ───────────────────────────────────────── */
 
 .destructive {
   background: var(--color-destructive-550);
   color: var(--color-constant-white);
 }
-.destructive:hover:not(:disabled) { background: var(--color-destructive-600); }
-.destructive:active:not(:disabled) { background: var(--color-destructive-600); }
 
-/* ── Modifiers ──────────────────────────────────────────── */
-.fullWidth { width: 100%; }
+.destructive:hover:not(:disabled) {
+  background: var(--color-destructive-600);
+}
 
-.loading .label { visibility: hidden; }
-.loading .icon { visibility: hidden; }
+.destructive:active:not(:disabled) {
+  background: var(--color-destructive-600);
+}
+
+.destructive:focus-visible {
+  outline: none;
+  border-color: var(--color-destructive-600);
+  box-shadow: 0 0 0 1px var(--color-destructive-600);
+}
+
+.destructive:disabled {
+  background: var(--color-surface-adjacent2);
+  color: var(--color-constant-white);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* ── Modifiers ─────────────────────────────────────────── */
+
+.fullWidth {
+  width: 100%;
+}
+
+.loading .label {
+  visibility: hidden;
+}
+
+.loading .icon {
+  visibility: hidden;
+}
 
 .spinner {
   position: absolute;
@@ -74,7 +183,89 @@
   animation: spin 600ms linear infinite;
 }
 
-.icon { display: flex; align-items: center; flex-shrink: 0; }
-.label { display: flex; align-items: center; }
+.icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
 
-@keyframes spin { to { transform: rotate(360deg); } }
+.label {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Icon-only button ──────────────────────────────────── */
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast);
+  position: relative;
+  padding: 0;
+}
+
+.iconButton:hover:not(:disabled) {
+  background: var(--color-surface-adjacent2);
+}
+
+.iconButton:active:not(:disabled) {
+  background: var(--color-surface-adjacent2);
+}
+
+.iconButton:focus-visible {
+  outline: none;
+  border-color: var(--color-accent-700);
+}
+
+.iconButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.2;
+}
+
+.iconButton_sm {
+  width: 24px;
+  height: 24px;
+}
+
+.iconButton_sm .iconSlot {
+  font-size: 12px;
+}
+
+.iconButton_md {
+  width: 28px;
+  height: 28px;
+}
+
+.iconButton_md .iconSlot {
+  font-size: 12px;
+}
+
+.iconButton_lg {
+  width: 32px;
+  height: 32px;
+}
+
+.iconButton_lg .iconSlot {
+  font-size: 16px;
+}
+
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

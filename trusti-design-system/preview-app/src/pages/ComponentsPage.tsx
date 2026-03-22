@@ -93,8 +93,11 @@ function AlertDemo() {
 }
 
 function ButtonDemo() {
+  const iconArrow = <span aria-hidden="true" style={{ fontSize: 'inherit' }}>&rsaquo;</span>;
+  const iconHome = <span aria-hidden="true" style={{ fontSize: 'inherit' }}>&bull;</span>;
   return (
-    <Section title="Button" desc="Variants: primary, secondary, ghost, destructive. Sizes: sm, md, lg. Supports loading and icons.">
+    <Section title="Button" desc="Variants: primary, secondary, ghost, destructive. Sizes: sm, md, lg. Supports leading/trailing icons and icon-only.">
+      <div className="label">Variants</div>
       <div className="demo" style={{ marginBottom: 12 }}>
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
@@ -107,10 +110,28 @@ function ButtonDemo() {
         <Button size="md">Medium</Button>
         <Button size="lg">Large</Button>
       </div>
+      <div className="label">With Icons</div>
+      <div className="demo" style={{ marginBottom: 12 }}>
+        <Button variant="primary" size="lg" leadingIcon={iconHome} trailingIcon={iconArrow}>Button text</Button>
+        <Button variant="secondary" size="lg" leadingIcon={iconHome} trailingIcon={iconArrow}>Button text</Button>
+        <Button variant="ghost" size="lg" leadingIcon={iconHome} trailingIcon={iconArrow}>Button text</Button>
+      </div>
       <div className="label">States</div>
-      <div className="demo">
+      <div className="demo" style={{ marginBottom: 12 }}>
         <Button loading>Loading</Button>
         <Button disabled>Disabled</Button>
+        <Button variant="secondary" disabled>Disabled</Button>
+        <Button variant="ghost" disabled>Disabled</Button>
+      </div>
+      <div className="label">Icon-only</div>
+      <div className="demo" style={{ marginBottom: 12 }}>
+        <Button iconOnly size="sm">{iconHome}</Button>
+        <Button iconOnly size="md">{iconHome}</Button>
+        <Button iconOnly size="lg">{iconHome}</Button>
+        <Button iconOnly disabled>{iconHome}</Button>
+      </div>
+      <div className="label">Full Width</div>
+      <div className="demo">
         <Button fullWidth>Full Width</Button>
       </div>
     </Section>
