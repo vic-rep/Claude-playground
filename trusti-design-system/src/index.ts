@@ -19,8 +19,8 @@ export type { AlertProps, AlertVariant, AlertAction } from './components/molecul
 export { Checkbox } from './components/molecules/Checkbox';
 export type { CheckboxProps } from './components/molecules/Checkbox';
 
-export { Radio } from './components/molecules/Radio';
-export type { RadioProps } from './components/molecules/Radio';
+export { Radio, RadioThumb } from './components/molecules/Radio';
+export type { RadioProps, RadioThumbProps } from './components/molecules/Radio';
 
 export { Input } from './components/molecules/Input';
 export type { InputProps, InputSize } from './components/molecules/Input';

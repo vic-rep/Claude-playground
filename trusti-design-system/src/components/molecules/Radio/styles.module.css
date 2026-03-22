@@ -1,7 +1,166 @@
-.label { display: flex; align-items: center; gap: var(--space-s); cursor: pointer; font-size: var(--font-size-text-default); color: var(--text-primary); }
-.input { position: absolute; opacity: 0; width: 0; height: 0; }
-.indicator { width: 20px; height: 20px; flex-shrink: 0; border: 2px solid var(--border-strong); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all var(--transition-fast); background: var(--bg-card); }
-.input:checked + .indicator { border-color: var(--interactive-primary); }
-.input:checked + .indicator::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--interactive-primary); }
-.input:focus-visible + .indicator { outline: 2px solid var(--interactive-primary); outline-offset: 2px; }
-.input:disabled + .indicator { opacity: 0.5; cursor: not-allowed; }
+/* ═══════════════════════════════════════════════════════════
+   Radio — Standard radio input
+   Figma: page 102:1630
+   ═══════════════════════════════════════════════════════════ */
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  cursor: pointer;
+  font-size: var(--font-size-text-default);
+  color: var(--text-primary);
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.indicator {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  background: var(--bg-card);
+}
+
+.input:checked + .indicator {
+  border-color: var(--interactive-primary);
+}
+
+.input:checked + .indicator::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--interactive-primary);
+}
+
+.input:focus-visible + .indicator {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+}
+
+.input:disabled + .indicator {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RadioThumb — Card-style radio with logo/icon
+   Figma: node 2418:32
+   Types: Logo, Icon | States: Default, Hover, Active, Disabled
+   ═══════════════════════════════════════════════════════════ */
+
+.thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+  position: relative;
+}
+
+.thumbInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── Card (the clickable area) ─────────────────────────── */
+
+.thumbCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: 96px;
+  padding: var(--space-s);
+  border: 1px solid var(--color-primary-300);
+  border-radius: var(--radius-m);
+  background: var(--color-primary-100);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* Hover */
+.thumbCard:hover {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-300);
+}
+
+/* Focus ring on keyboard nav */
+.thumbInput:focus-visible + .thumbCard {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+}
+
+/* Active / checked */
+.thumb_active .thumbCard {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-400);
+}
+
+/* Disabled */
+.thumb_disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.thumb_disabled .thumbCard {
+  cursor: not-allowed;
+}
+
+/* ── Media slot (logo or icon) ─────────────────────────── */
+
+.thumbMedia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 64px;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 24px;
+}
+
+.thumbMedia img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ── Label ─────────────────────────────────────────────── */
+
+.thumbLabel {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-small);
+  color: var(--text-primary);
+  text-align: center;
+  min-width: 100%;
+}
+
+/* ── Disclaimer (below card) ───────────────────────────── */
+
+.thumbDisclaimer {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-small);
+  color: var(--text-primary);
+  white-space: nowrap;
+}

@@ -10,6 +10,7 @@ import {
   Pill,
   ProgressBar,
   Radio,
+  RadioThumb,
   Slider,
   Tabs,
   Tag,
@@ -236,12 +237,73 @@ function ProgressBarDemo() {
 
 function RadioDemo() {
   const [val, setVal] = useState('a');
+  const [thumbVal, setThumbVal] = useState('speedy');
   return (
-    <Section title="Radio" desc="Radio button input.">
-      <div className="demo-vertical">
+    <Section title="Radio" desc="Standard radio buttons and card-style RadioThumb with logo/icon variants.">
+      <div className="label">Standard Radio</div>
+      <div className="demo-vertical" style={{ marginBottom: 24 }}>
         <Radio name="demo-radio" label="Option A" value="a" checked={val === 'a'} onChange={() => setVal('a')} />
         <Radio name="demo-radio" label="Option B" value="b" checked={val === 'b'} onChange={() => setVal('b')} />
         <Radio name="demo-radio" label="Option C (disabled)" value="c" disabled />
+      </div>
+      <div className="label">RadioThumb — Logo type</div>
+      <div className="demo" style={{ marginBottom: 24 }}>
+        <RadioThumb
+          name="delivery"
+          value="speedy"
+          label="Speedy"
+          checked={thumbVal === 'speedy'}
+          onChange={setThumbVal}
+          logo={<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Speedy_logo.svg/120px-Speedy_logo.svg.png" alt="Speedy" style={{ height: 24, objectFit: 'contain' }} />}
+          disclaimer="2,00 лв / 1,02 €"
+        />
+        <RadioThumb
+          name="delivery"
+          value="econt"
+          label="Econt"
+          checked={thumbVal === 'econt'}
+          onChange={setThumbVal}
+          logo={<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Econt_Express_logo.svg/120px-Econt_Express_logo.svg.png" alt="Econt" style={{ height: 24, objectFit: 'contain' }} />}
+          disclaimer="3,50 лв / 1,79 €"
+        />
+        <RadioThumb
+          name="delivery"
+          value="disabled"
+          label="DHL"
+          disabled
+          logo={<i className="fa-solid fa-truck" aria-hidden="true" />}
+          disclaimer="N/A"
+        />
+      </div>
+      <div className="label">RadioThumb — Icon type</div>
+      <div className="demo">
+        <RadioThumb
+          name="pickup"
+          value="office"
+          label="Office"
+          checked={thumbVal === 'office'}
+          onChange={setThumbVal}
+          icon={<i className="fa-regular fa-shop" aria-hidden="true" />}
+          disclaimer="2,00 лв / 1,02 €"
+        />
+        <RadioThumb
+          name="pickup"
+          value="home"
+          label="Home"
+          checked={thumbVal === 'home'}
+          onChange={setThumbVal}
+          icon={<i className="fa-regular fa-house" aria-hidden="true" />}
+          disclaimer="5,00 лв / 2,56 €"
+        />
+        <RadioThumb
+          name="pickup"
+          value="locker"
+          label="Locker"
+          checked={thumbVal === 'locker'}
+          onChange={setThumbVal}
+          icon={<i className="fa-regular fa-box" aria-hidden="true" />}
+          disclaimer="1,50 лв / 0,77 €"
+        />
       </div>
     </Section>
   );
