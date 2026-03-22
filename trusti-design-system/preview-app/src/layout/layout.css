@@ -42,6 +42,28 @@
 .sidebar-title {
   font-size: 18px;
   font-weight: 600;
+  flex: 1;
+}
+
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-s);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 150ms ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 .sidebar-nav {

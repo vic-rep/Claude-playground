@@ -181,6 +181,54 @@
   --grid-max-width: 1200px;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   Dark Mode — Semantic overrides
+   Apply via [data-theme="dark"] on <html> or any ancestor
+   ═══════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  /* ── Surfaces ──────────────────────────────────────────── */
+  --color-surface: #1A1A1A;
+  --color-surface-adjacent: #242424;
+  --color-surface-adjacent2: #2E2E2E;
+
+  /* ── Primary (Neutral) — inverted ──────────────────────── */
+  --color-primary-900: #F0F0F0;
+  --color-primary-800: #E6E6E6;
+  --color-primary-700: #CCCCCC;
+  --color-primary-600: #999999;
+  --color-primary-500: #808080;
+  --color-primary-400: #666666;
+  --color-primary-300: #4D4D4D;
+  --color-primary-200: #333333;
+  --color-primary-100: #292929;
+
+  /* ── Constants stay absolute ────────────────────────────── */
+  --color-constant-white: #FFFFFF;
+  --color-constant-black: #191919;
+
+  /* ── Semantic — auto-derived from overridden primaries ─── */
+  --text-primary: var(--color-primary-900);
+  --text-secondary: var(--color-primary-600);
+  --text-tertiary: var(--color-primary-500);
+  --text-disabled: var(--color-primary-400);
+  --text-inverse: var(--color-constant-black);
+
+  --bg-page: var(--color-surface);
+  --bg-card: var(--color-surface-adjacent);
+  --bg-card-nested: var(--color-surface-adjacent2);
+
+  --border-default: var(--color-primary-200);
+  --border-strong: var(--color-primary-300);
+
+  /* ── Status colors — slightly muted for dark bg ────────── */
+  --color-success-100: #0D2818;
+  --color-warning-100: #2A1E0A;
+  --color-destructive-100: #2A0A0F;
+
+  /* ── Accent — keep the same, works well on dark ────────── */
+  --color-accent-100: #2A1A0A;
+}
+
 /* ── Typography — Mobile (<768px) ───────────────────────── */
 @media (max-width: 767px) {
   :root {

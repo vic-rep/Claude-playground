@@ -1,20 +1,102 @@
-.accordion { display: flex; flex-direction: column; border: 1px solid var(--border-default); border-radius: var(--radius-m); overflow: hidden; }
-.panel { border-bottom: 1px solid var(--border-default); }
-.panel:last-child { border-bottom: none; }
+/* ═══════════════════════════════════════════════════════════
+   Accordion — Figma node 648:1547
+   Flat list with accent top-border when expanded
+   ═══════════════════════════════════════════════════════════ */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ── Panel ─────────────────────────────────────────────── */
+
+.panel {
+  padding-bottom: var(--space-4xl);
+}
+
+/* ── Top border line ───────────────────────────────────── */
+
+.topBorder {
+  height: 1px;
+  width: 100%;
+  background: var(--color-primary-200);
+  transition: background var(--transition-fast), height var(--transition-fast);
+}
+
+.open .topBorder {
+  height: 3px;
+  background: var(--color-accent-600);
+}
+
+/* ── Trigger button ────────────────────────────────────── */
+
 .trigger {
-  display: flex; align-items: center; justify-content: space-between; width: 100%;
-  padding: var(--space-l) var(--space-xl); font-size: var(--font-size-text-default); font-weight: 500;
-  color: var(--text-primary); background: var(--bg-card); text-align: left;
-  transition: background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+  width: 100%;
+  padding: var(--space-l) var(--space-l) 0;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: opacity var(--transition-fast);
 }
-.trigger:hover:not(:disabled) { background: var(--color-primary-100); }
-.trigger:disabled { opacity: 0.5; cursor: not-allowed; }
-.trigger:focus-visible { outline: 2px solid var(--interactive-primary); outline-offset: -2px; }
-.title { flex: 1; }
+
+.trigger:hover:not(:disabled) {
+  opacity: 0.7;
+}
+
+.trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ── Title ─────────────────────────────────────────────── */
+
+.title {
+  flex: 1;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-text-large);
+  font-weight: 500;
+  line-height: var(--line-height-default);
+  min-width: 0;
+}
+
+/* ── Chevron icon ──────────────────────────────────────── */
+
 .chevron {
-  font-size: 20px; color: var(--text-tertiary); transition: transform var(--transition-normal);
-  display: flex; align-items: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--text-primary);
+  transition: transform var(--transition-normal);
 }
-.open .chevron { transform: rotate(90deg); }
-.content { overflow: hidden; transition: max-height var(--transition-normal); }
-.inner { padding: 0 var(--space-xl) var(--space-l); color: var(--text-secondary); line-height: 1.5; }
+
+.open .chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Content area ──────────────────────────────────────── */
+
+.content {
+  overflow: hidden;
+  transition: max-height var(--transition-normal);
+}
+
+.inner {
+  padding: var(--space-l) var(--space-l) 0;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-text-small);
+  font-weight: 400;
+  line-height: var(--line-height-default);
+  color: var(--text-primary);
+}

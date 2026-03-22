@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './layout.css';
 
@@ -35,6 +36,16 @@ const navItems = [
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const isComponentsPage = location.pathname === '/components';
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.getAttribute('data-theme') === 'dark';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  }, [dark]);
 
   return (
     <div className="preview-layout">
@@ -42,6 +53,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="sidebar-header">
           <div className="sidebar-logo">T</div>
           <span className="sidebar-title">Trusti DS</span>
+          <button
+            className="theme-toggle"
+            onClick={() => setDark((d) => !d)}
+            aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            type="button"
+          >
+            <i className={`fa-solid ${dark ? 'fa-sun' : 'fa-moon'}`} aria-hidden="true" />
+          </button>
         </div>
         <nav className="sidebar-nav">
           {navItems.map((item) => (
