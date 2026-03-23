@@ -19,28 +19,21 @@ export interface Prototype {
  */
 export const prototypes: Prototype[] = [
   {
-    id: 'insurance-quote',
-    title: 'Insurance Quote Flow',
-    description:
-      'A multi-step insurance quote wizard demonstrating form inputs, validation, navigation, and the cart template.',
-    tags: ['Form', 'Wizard', 'Cart'],
-    status: 'planned',
-  },
-  {
-    id: 'vehicle-dashboard',
-    title: 'Vehicle Dashboard',
-    description:
-      'Dashboard showing vehicle details cards, offer lists, and data visualizations using the design system.',
-    tags: ['Dashboard', 'Cards', 'Data'],
-    status: 'planned',
-  },
-  {
     id: 'sms-campaigns',
     title: 'SMS Campaign Manager',
     description:
       'Marketing tool for creating and sending SMS campaigns. Includes campaign editor with Bulgarian telecom-compliant character limits (GSM 7-bit / UCS-2), live phone preview, audience segment management, scheduling, and delivery statistics.',
     tags: ['Marketing', 'SMS', 'Dashboard', 'Forms'],
     route: '/prototypes/sms-campaigns',
+    status: 'live',
+  },
+  {
+    id: 'insure-connect',
+    title: 'InsureConnect Call Center',
+    description:
+      'AI-powered call center platform for insurance sales agents. Features lead management with SLA timers, dynamic pricing engine, AI sales hints, call workspace with real-time controls, team dashboards with leaderboards, and script management. RBAC with 4 roles across pan-European markets.',
+    tags: ['Call Center', 'AI', 'Dashboard', 'CRM', 'Insurance'],
+    route: '/prototypes/insure-connect',
     status: 'live',
   },
 ];
