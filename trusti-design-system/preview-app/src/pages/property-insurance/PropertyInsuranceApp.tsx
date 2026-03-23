@@ -1,44 +1,61 @@
 import { useState } from 'react';
 import {
   Navigation,
-  Footer,
   FAQ,
   Button,
   Input,
   Pill,
   Carousel,
-  Logo,
 } from '@trusti/design-system';
 import styles from './PropertyInsurance.module.css';
 
 /* Figma: Property Insurance landing page
-   File: LoFRsBK3jriBBr8XjfmVMV — node 4165:16196
+   File: LoFRsBK3jriBBr8XjfmVMV — node 4165:14186
+   Design context extracted from child nodes:
+   - 4165:14188 (Navigation), 4165:14189 (Hero + Pricing),
+   - 4165:14262 (Coverage), 4165:14328 (Fenix),
+   - 4165:14184 (Footer), 4165:14185 (TabBar — skipped for web)
 */
 
-/* ── Navigation items ───────────────────────────────────── */
-const NAV_ITEMS = [
-  { id: 'home', label: 'Начало', href: '#', active: true },
-  { id: 'products', label: 'Продукти', href: '#' },
-  { id: 'about', label: 'За нас', href: '#' },
-  { id: 'contact', label: 'Контакти', href: '#' },
+/* ── Pricing plans ─────────────────────────────────────────── */
+const PRICING_PLANS = [
+  {
+    name: 'Базов',
+    priceEur: '100',
+    priceBgn: '59',
+    limitEur: '30 000',
+    limitBgn: '59 000',
+    desc: 'Подходящ за малки апартаменти и по-скромни имоти',
+  },
+  {
+    name: 'Стандартен',
+    priceEur: '100',
+    priceBgn: '59',
+    limitEur: '60 000',
+    limitBgn: '117 000',
+    desc: 'Подходящ за по - големи апартаменти и семейни жилища',
+  },
+  {
+    name: 'Премиум',
+    priceEur: '100',
+    priceBgn: '59',
+    limitEur: '100 000',
+    limitBgn: '196 000',
+    desc: 'Подходящ за къщи, вили и имоти с по-висока стойност',
+  },
 ];
 
-/* ── Coverage risk pills ────────────────────────────────── */
-const RISK_ITEMS = [
-  { icon: 'fa-solid fa-handshake', label: 'Гражданска отговорност' },
+/* ── Coverage risks ────────────────────────────────────────── */
+const COVERAGE_RISKS = [
+  { icon: 'fa-solid fa-explosion', label: 'Експлозия' },
   { icon: 'fa-solid fa-house-crack', label: 'Земетресение' },
-  { icon: 'fa-solid fa-lock', label: 'Кражба' },
-  { icon: 'fa-solid fa-water', label: 'Наводнение' },
+  { icon: 'fa-solid fa-droplet', label: 'Наводнение' },
   { icon: 'fa-solid fa-fire', label: 'Пожар' },
-  { icon: 'fa-solid fa-wind', label: 'Буря' },
   { icon: 'fa-solid fa-bolt', label: 'Мълния' },
-  { icon: 'fa-solid fa-snowflake', label: 'Замръзване' },
+  { icon: 'fa-solid fa-galaxy', label: 'Имплозия' },
 ];
 
-/* ── Insurer partners ───────────────────────────────────── */
-const PARTNERS = ['Армеец', 'Булстрад', 'ДЗИ', 'Лев Инс', 'Уника'];
-
-/* ── Feature sections ───────────────────────────────────── */
+/* ── Feature sections ───────────────────────────────────────── */
 const FEATURES = [
   {
     icon: 'fa-solid fa-clock',
@@ -57,7 +74,7 @@ const FEATURES = [
   },
 ];
 
-/* ── Steps ──────────────────────────────────────────────── */
+/* ── Steps ──────────────────────────────────────────────────── */
 const STEPS = [
   {
     num: 1,
@@ -79,7 +96,7 @@ const STEPS = [
   },
 ];
 
-/* ── Other services (carousel) ──────────────────────────── */
+/* ── Other services (carousel) ──────────────────────────────── */
 const OTHER_SERVICES = [
   { icon: 'fa-solid fa-car', title: 'Автомобилно застраховане', desc: 'ГО, Каско и пътна помощ' },
   { icon: 'fa-solid fa-heart-pulse', title: 'Здравно застраховане', desc: 'Грижа за вашето здраве' },
@@ -87,7 +104,7 @@ const OTHER_SERVICES = [
   { icon: 'fa-solid fa-briefcase', title: 'Бизнес застраховане', desc: 'Защита за вашия бизнес' },
 ];
 
-/* ── FAQ Data ───────────────────────────────────────────── */
+/* ── FAQ Data ───────────────────────────────────────────────── */
 const FAQ_ITEMS = [
   {
     question: 'Какво покрива имущественото застраховане?',
@@ -111,36 +128,36 @@ const FAQ_ITEMS = [
   },
   {
     question: 'От какъв застраховател е полицата?',
-    answer: 'Работим с водещи застрахователи в България — Армеец, Булстрад, ДЗИ, Лев Инс и Уника. Trusti AI брокер избира най-добрата оферта за вас.',
+    answer: 'Работим с водещи застрахователи в България. Trusti AI брокер избира най-добрата оферта за вас.',
   },
 ];
 
-/* ── Footer columns ─────────────────────────────────────── */
-const FOOTER_COLUMNS = [
-  {
-    title: 'Продукти',
-    links: [
-      { label: 'Имуществено', href: '#' },
-      { label: 'Автомобилно', href: '#' },
-      { label: 'Здравно', href: '#' },
-      { label: 'Пътуване', href: '#' },
-    ],
-  },
-  {
-    title: 'Помощен център',
-    links: [
-      { label: 'Често задавани въпроси', href: '#faq' },
-      { label: 'Контакти', href: '#' },
-      { label: 'Условия за ползване', href: '#' },
-      { label: 'Поверителност', href: '#' },
-    ],
-  },
+/* ── Footer links ───────────────────────────────────────────── */
+const FOOTER_PRODUCT_LINKS = [
+  'Гражданска отговорност',
+  'Каско',
+  'За дома',
+  'Пътна застраховка',
+  'Пътна застраховка',
+  'Домашен интернет и ТВ',
+  'Мобилни планове',
+  'Заеми',
 ];
 
-/* ── Trusti Logo ────────────────────────────────────────── */
-function TrustiLogo({ color = 'white' }: { color?: string }) {
+const FOOTER_SECONDARY_LINKS = [
+  'За нас',
+  'FAQ',
+  'Рецензии',
+  'Статии',
+  'Политика за поверителност',
+  'Условия за ползване',
+  'Свържете се с нас',
+];
+
+/* ── Trusti Logo ────────────────────────────────────────────── */
+function TrustiLogo({ color = 'white', size = 18 }: { color?: string; size?: number }) {
   return (
-    <span className={styles.trustiLogo} style={{ color }}>
+    <span className={styles.trustiLogo} style={{ color, fontSize: size }}>
       <i className="fa-solid fa-shield-check" aria-hidden="true" />
       <span>trusti</span>
     </span>
@@ -157,92 +174,149 @@ export function PropertyInsuranceApp() {
     <div className={styles.page}>
       {/* ── Navigation ───────────────────────────────────── */}
       <Navigation
-        logo={<TrustiLogo />}
-        items={NAV_ITEMS}
+        logo={<TrustiLogo color="#191919" />}
+        items={[]}
         actions={
-          <Button variant="secondary" size="sm">
-            Вход
-          </Button>
+          <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 10 }}>
+            <i className="fa-regular fa-user" style={{ fontSize: 16, color: '#191919' }} aria-hidden="true" />
+          </button>
         }
       />
 
-      {/* ── Hero Section ─────────────────────────────────── */}
+      {/* ── Hero Section — Dark with pricing cards ─────── */}
       <section className={styles.hero}>
         <div className={styles.container}>
-          <h1 className={styles.heroTitle}>
-            Едно застраховане за всичките ти имоти
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Защити до 5 имота в една застраховка
-          </p>
-
-          {/* App store badges */}
-          <div className={styles.storeBadges}>
-            <Pill variant="default">
-              <i className="fa-brands fa-apple" aria-hidden="true" /> App Store
-            </Pill>
-            <Pill variant="default">
-              <i className="fa-brands fa-google-play" aria-hidden="true" /> Google Play
-            </Pill>
-          </div>
-
-          {/* Address search */}
-          <div className={styles.heroSearch}>
-            <Input
-              placeholder="Въведете адрес на имота"
-              leftIcon={<i className="fa-solid fa-location-dot" aria-hidden="true" />}
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              aria-label="Адрес на имота"
-            />
-            <Button variant="primary" size="md">
-              Търси
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Risk pills horizontal scroll ─────────────────── */}
-      <section className={styles.riskSection}>
-        <div className={styles.riskScroll}>
-          {RISK_ITEMS.map((item, i) => (
-            <div key={i} className={styles.riskCard}>
-              <div className={styles.riskIcon}>
-                <i className={item.icon} aria-hidden="true" />
-              </div>
-              <span className={styles.riskLabel}>{item.label}</span>
+          <div className={styles.heroContent}>
+            {/* Text block */}
+            <div className={styles.heroText}>
+              <p className={styles.heroSubtitle}>Недвижимо имущество</p>
+              <h1 className={styles.heroTitle}>
+                Една застраховка за всичките ти имоти
+              </h1>
+              <p className={styles.heroDesc}>
+                Защити своя дом в рамките на две минути
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* ── Hero image (man with phone) ──────────────────── */}
-      <section className={styles.heroImageSection}>
-        <div className={styles.container}>
-          <div className={styles.imagePlaceholder}>
-            <i className="fa-solid fa-user" aria-hidden="true" />
+            {/* Google reviews */}
+            <div className={styles.googleReviews}>
+              <span style={{ fontSize: 24, marginRight: 4 }}>G</span>
+              <strong>4.9</strong>
+              <i className={`fa-solid fa-star ${styles.googleStar}`} aria-hidden="true" />
+              <span>on Google reviews</span>
+            </div>
+
+            {/* Pricing cards */}
+            <div className={styles.pricingCards}>
+              {PRICING_PLANS.map((plan) => (
+                <div key={plan.name} className={styles.pricingCard}>
+                  <div className={styles.pricingCardHeader}>
+                    <h3 className={styles.pricingCardName}>{plan.name}</h3>
+                    <div className={styles.pricingCardPrices}>
+                      <span className={styles.pricingCardPrice}>
+                        {plan.priceEur} <span className="currency">€</span>
+                      </span>
+                      <div className={styles.pricingCardDivider} />
+                      <span className={styles.pricingCardPrice}>
+                        {plan.priceBgn} <span className="currency">лв</span>
+                      </span>
+                    </div>
+                    <i className={`fa-regular fa-chevron-right ${styles.pricingCardChevron}`} aria-hidden="true" />
+                  </div>
+                  <div className={styles.pricingCardBody}>
+                    <p className={styles.pricingCardLimit}>
+                      <span className="label">Щети до </span>
+                      <span className="value">{plan.limitEur} € | {plan.limitBgn} лв.</span>
+                    </p>
+                    <p className={styles.pricingCardDesc}>{plan.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Partner logos: Fenix × Trusti */}
+            <div className={styles.partnerLogos}>
+              <span style={{ fontSize: 14, fontWeight: 600, color: 'white', letterSpacing: 1 }}>
+                Fenix
+              </span>
+              <i className="fa-regular fa-xmark" style={{ fontSize: 21, color: '#ccc' }} aria-hidden="true" />
+              <TrustiLogo color="white" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── "Защита при 15 чести риска" ──────────────────── */}
-      <section className={styles.section}>
+      {/* ── Coverage section — Risk grid ────────────────── */}
+      <section className={styles.coverageSection}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Защита при 15 чести риска</h2>
-          <p className={styles.sectionDesc}>
-            Нашата имуществена застраховка покрива пожар, кражба, земетресение, наводнение, буря, гражданска отговорност, ВиК аварии и още. Всичко в един пакет.
-          </p>
+          <div className={styles.coverageSectionInner}>
+            <div className={styles.coverageHeader}>
+              <h2>Защита при 15 чести риска</h2>
+              <p>
+                Ако домът ти пострада от някоя от тези щети, ще имаш покритие за възстановяването му.
+              </p>
+            </div>
+
+            <div className={styles.coverageCard}>
+              <h3 className={styles.coverageCardTitle}>Покрития</h3>
+              <div className={styles.coverageGrid}>
+                {COVERAGE_RISKS.map((risk) => (
+                  <div key={risk.label} className={styles.coverageItem}>
+                    <i className={risk.icon} aria-hidden="true" />
+                    <span>{risk.label}</span>
+                  </div>
+                ))}
+              </div>
+              <button className={styles.coverageShowAll}>
+                <span>Покажи всички</span>
+                <i className="fa-regular fa-plus" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── "Какво решаваме с Феникс" + partner logos ────── */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Какво решаваме с Феникс</h2>
-          <div className={styles.partnerLogos}>
-            {PARTNERS.map((name) => (
-              <Logo key={name} name={name} size="md" variant="grayscale" />
-            ))}
+      {/* ── Fenix section — Phone mockup ───────────────── */}
+      <section className={styles.fenixSection}>
+        <h2>Какво решаваме с Феникс</h2>
+        <div className={styles.fenixContent}>
+          <div className={styles.fenixLogos}>
+            <TrustiLogo color="#191919" />
+            <i className="fa-regular fa-xmark" style={{ fontSize: 21, color: '#4d4d4d' }} aria-hidden="true" />
+            <span style={{ fontSize: 18, fontWeight: 700, color: '#191919', fontFamily: 'var(--font-family-primary)' }}>
+              Fenix
+            </span>
+          </div>
+          <p className={styles.fenixDesc}>
+            С Феникс решихме два големи проблема — сложната покупка и нуждата от отделна полица за всеки имот.
+          </p>
+        </div>
+
+        {/* Phone mockup placeholder */}
+        <div style={{ position: 'relative', width: '100%' }}>
+          <div className={styles.phoneMockup}>
+            <i className="fa-solid fa-mobile-screen" aria-hidden="true" />
+          </div>
+
+          {/* Floating stat cards */}
+          <div className={styles.floatingStatCard} style={{ position: 'absolute', left: 12, top: '30%' }}>
+            <div className={styles.floatingStatIcon}>
+              <i className="fa-solid fa-box-check" aria-hidden="true" />
+            </div>
+            <div className={styles.floatingStatText}>
+              <strong>0</strong>
+              <span>Нужни документа</span>
+            </div>
+          </div>
+
+          <div className={styles.floatingStatCard} style={{ position: 'absolute', right: 12, bottom: '10%' }}>
+            <div className={styles.floatingStatIcon}>
+              <i className="fa-solid fa-buildings" aria-hidden="true" />
+            </div>
+            <div className={styles.floatingStatText}>
+              <strong>1</strong>
+              <span>Собственик, няколко имота</span>
+            </div>
           </div>
         </div>
       </section>
@@ -353,17 +427,109 @@ export function PropertyInsuranceApp() {
         </div>
       </section>
 
-      {/* ── Footer ───────────────────────────────────────── */}
-      <Footer
-        logo={<TrustiLogo color="white" />}
-        columns={FOOTER_COLUMNS}
-        bottomText="© 2026 Trusti. Всички права запазени."
-        socialLinks={[
-          { icon: <i className="fa-brands fa-facebook" />, href: '#', label: 'Facebook' },
-          { icon: <i className="fa-brands fa-instagram" />, href: '#', label: 'Instagram' },
-          { icon: <i className="fa-brands fa-linkedin" />, href: '#', label: 'LinkedIn' },
-        ]}
-      />
+      {/* ── Custom Footer (Figma: 4165:14184) ──────────── */}
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
+          <div className={styles.footerTop}>
+            {/* Product links */}
+            <div className={styles.footerLinks}>
+              {FOOTER_PRODUCT_LINKS.map((link, i) => (
+                <a key={i} href="#">{link}</a>
+              ))}
+            </div>
+
+            {/* Secondary links */}
+            <div className={styles.footerLinksSecondary}>
+              {FOOTER_SECONDARY_LINKS.map((link, i) => (
+                <a key={i} href="#">{link}</a>
+              ))}
+            </div>
+
+            {/* Payment methods */}
+            <div className={styles.paymentSection}>
+              <h3>Плати лесно и сигурно с</h3>
+              <div className={styles.paymentMethods}>
+                <span>VISA</span>
+                <span>Mastercard</span>
+                <span>G Pay</span>
+                <span>ePay</span>
+                <span>newpay</span>
+              </div>
+            </div>
+
+            <div className={styles.footerDivider} />
+
+            {/* Newsletter */}
+            <div className={styles.newsletterSection}>
+              <h3>Запишете се за нашият бюлетин</h3>
+              <div className={styles.newsletterForm}>
+                <div className={styles.newsletterInput}>
+                  <label>Email</label>
+                  <input type="email" placeholder="handle@domain.com" />
+                </div>
+                <button className={styles.newsletterSubscribe}>
+                  <i className="fa-regular fa-envelope" aria-hidden="true" />
+                  Абонирай се
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.footerBottom}>
+            <div className={styles.footerDivider} />
+
+            {/* About + Logo */}
+            <div className={styles.footerAbout}>
+              <div className={styles.footerLogo}>
+                <i className="fa-solid fa-shield-check" aria-hidden="true" />
+                <span>trusti</span>
+              </div>
+              <p className={styles.footerCopyright}>
+                © 2023 Trusti. Тръсти ЕООД е застрахователен брокер, регистриран и одобрен от КФН с удостоверение № 734-3Б от 02.02.2021 г.
+                <br />
+                Всички права запазени
+              </p>
+            </div>
+
+            {/* Social icons */}
+            <div className={styles.socialIcons}>
+              <a href="#" className={`${styles.socialIcon} ${styles.active}`} aria-label="Facebook">
+                <i className="fa-brands fa-facebook-f" aria-hidden="true" />
+              </a>
+              <a href="#" className={styles.socialIcon} aria-label="Instagram">
+                <i className="fa-brands fa-instagram" aria-hidden="true" />
+              </a>
+              <a href="#" className={styles.socialIcon} aria-label="Twitter">
+                <i className="fa-brands fa-x-twitter" aria-hidden="true" />
+              </a>
+              <a href="#" className={styles.socialIcon} aria-label="YouTube">
+                <i className="fa-brands fa-youtube" aria-hidden="true" />
+              </a>
+              <a href="#" className={styles.socialIcon} aria-label="LinkedIn">
+                <i className="fa-brands fa-linkedin-in" aria-hidden="true" />
+              </a>
+            </div>
+
+            {/* Help center card */}
+            <div className={styles.helpCenterCard}>
+              <div className={styles.helpCenterHeader}>
+                <div className="text">
+                  <h4>Помощен център</h4>
+                  <span>24/7</span>
+                </div>
+                <i className="fa-regular fa-message-question" style={{ fontSize: 32, color: 'white' }} aria-hidden="true" />
+              </div>
+              <p className={styles.helpCenterDesc}>
+                Моля, свържете се, ако имате нужда от индивидуална помощ, за да започнете с нови продукти или имате други въпроси.
+              </p>
+              <a href="#" className={styles.helpCenterLink}>
+                Свържи се с нас
+                <i className="fa-regular fa-chevron-right" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
