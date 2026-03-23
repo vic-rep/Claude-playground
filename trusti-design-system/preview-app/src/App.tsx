@@ -6,6 +6,7 @@ import { ComponentsPage } from './pages/ComponentsPage';
 import { PrototypesPage } from './pages/PrototypesPage';
 import { SmsCampaignApp } from './pages/SmsCampaignApp';
 import { InsureConnectApp } from './pages/insure-connect/InsureConnectApp';
+import { PropertyInsuranceApp } from './pages/property-insurance/PropertyInsuranceApp';
 
 export function App() {
   return (
@@ -17,6 +18,7 @@ export function App() {
         <Route path="/prototypes" element={<PrototypesPage />} />
         <Route path="/prototypes/sms-campaigns" element={<SmsCampaignApp />} />
         <Route path="/prototypes/insure-connect" element={<InsureConnectApp />} />
+        <Route path="/prototypes/property-insurance" element={<PropertyInsuranceApp />} />
       </Routes>
     </Layout>
   );

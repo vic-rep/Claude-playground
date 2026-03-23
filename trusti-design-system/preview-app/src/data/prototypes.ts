@@ -36,4 +36,13 @@ export const prototypes: Prototype[] = [
     route: '/prototypes/insure-connect',
     status: 'live',
   },
+  {
+    id: 'property-insurance',
+    title: 'Property Insurance Landing',
+    description:
+      'Marketing landing page for property insurance products. Features hero with address search, coverage breakdown, 3-step onboarding flow, phone app preview mockups, FAQ accordion, and CTA sections. Fully responsive with Bulgarian copy.',
+    tags: ['Landing Page', 'Insurance', 'Marketing', 'Property'],
+    route: '/prototypes/property-insurance',
+    status: 'live',
+  },
 ];
