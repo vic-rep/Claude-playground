@@ -2,6 +2,7 @@
    VehicleDetailsCard — Figma node 3016:4264
    Pre-talon: dark top (checks) + light bottom (CTA)
    Post-talon: single dark card
+   Radius mapping: Figma --s=8px → --radius-m, --xs=4px → --radius-s
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Shared dark card ─────────────────────────────────────── */
@@ -9,9 +10,9 @@
   background: #191919;
   display: flex;
   flex-direction: column;
-  gap: var(--space-m);
-  padding: var(--space-m);
-  border-radius: var(--radius-s);
+  gap: var(--space-m);          /* 12px — Figma: gap-[var(--m,12px)] */
+  padding: var(--space-m);      /* 12px — Figma: p-[var(--m,12px)] */
+  border-radius: var(--radius-m); /* 8px — Figma: rounded-[var(--s,8px)] */
   width: 100%;
 }
 
@@ -22,35 +23,35 @@
   flex-direction: column;
 }
 
-/* Dark top section: rounded top only, no bottom radius */
+/* Dark top section: rounded top only */
 .preTalonTop {
-  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  margin-bottom: -1px;          /* Figma: mb-[-1px] — overlap with CTA */
 }
 
 /* ── Talon CTA (light bottom section) ─────────────────────── */
 .talonCta {
-  background: var(--color-surface-adjacent2);
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
-  padding: var(--space-l);
+  background: var(--color-surface-adjacent2);  /* Figma: var(--surface-adjescent-2,#e1e5eb) */
+  border-radius: 0 0 var(--radius-m) var(--radius-m);
+  padding: var(--space-l);      /* 16px — Figma: p-[var(--l,16px)] */
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  /* overlap border between sections */
-  margin-top: -1px;
+  gap: 12px;                    /* Figma: gap-[12px] */
+  margin-bottom: -1px;          /* Figma: mb-[-1px] */
 }
 
 .talonInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 12px;                    /* Figma: gap-[12px] */
   width: 100%;
 }
 
 .talonLogoBadge {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-max);
-  background: var(--color-surface-adjacent);
+  border-radius: var(--radius-full); /* Figma: rounded-[var(--max,128px)] */
+  background: var(--color-surface-adjacent);  /* Figma: var(--surface-adjescent,white) */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,16 +68,17 @@
   font-family: var(--font-family-primary);
   font-weight: 500;
   font-size: 14px;
-  line-height: var(--line-height-default);
-  color: #191919;
+  line-height: 1.2;            /* Figma: leading-[1.2] */
+  color: #191919;              /* Figma: var(--primary,#191919) */
   margin: 0;
   flex: 1;
+  min-width: 0;
 }
 
 .talonForm {
   display: flex;
-  gap: 12px;
-  align-items: flex-end;
+  gap: 12px;                    /* Figma: gap-[12px] */
+  align-items: flex-end;        /* Figma: items-end */
   width: 100%;
 }
 
@@ -87,14 +89,14 @@
 
 .talonInput {
   width: 100%;
-  height: 41px;
+  height: 41px;                 /* Figma: h-[41px] */
   font-family: var(--font-family-primary);
-  font-size: 16px;
+  font-size: 16px;              /* Figma: text-[16px] */
   font-weight: 400;
-  line-height: var(--line-height-default);
-  padding: var(--space-m);
-  border: 1px solid #ccc;
-  border-radius: var(--radius-s);
+  line-height: 1.2;
+  padding: var(--space-m);      /* 12px — Figma: p-[var(--m,12px)] */
+  border: 1px solid #ccc;       /* Figma: border-[var(--primary/300,#ccc)] */
+  border-radius: var(--radius-m); /* 8px — Figma: rounded-[var(--s,8px)] */
   background: var(--color-surface-adjacent);
   color: var(--text-primary);
   outline: none;
@@ -103,7 +105,7 @@
 }
 
 .talonInput::placeholder {
-  color: #999;
+  color: #999;                  /* Figma: var(--primary/400,#999) */
 }
 
 .talonInput:focus {
@@ -112,17 +114,20 @@
 
 .talonSubmit {
   flex-shrink: 0;
+  width: 87px;                  /* Figma: w-[87px] */
   font-family: var(--font-family-primary);
   font-weight: 500;
   font-size: 14px;
-  line-height: var(--line-height-default);
-  padding: var(--space-m) var(--space-xl);
+  line-height: 1.2;
+  padding: var(--space-m) var(--space-xl); /* 12px 20px — Figma: py-[var(--m,12px)] px-[var(--xl,20px)] */
   border: none;
-  border-radius: var(--radius-s);
-  background: var(--interactive-primary);
+  border-radius: var(--radius-m); /* 8px — Figma: rounded-[var(--s,8px)] */
+  background: var(--interactive-primary);  /* Figma: var(--accent-color/orange-600-primary,#f76803) */
   color: white;
   cursor: pointer;
   white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
   transition: opacity var(--transition-fast);
 }
 
@@ -145,22 +150,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-s);
+  width: 100%;
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: var(--space-s);
+  gap: var(--space-s);          /* 8px */
   min-width: 0;
 }
 
 /* ── Pre-Talon title ──────────────────────────────────────── */
 .preTalonTitle {
   font-family: var(--font-family-primary);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: var(--line-height-default);
+  font-weight: 600;             /* Figma: SemiBold */
+  font-size: 16px;              /* Figma: text-[16px] */
+  line-height: 1.2;
   color: white;
   margin: 0;
   white-space: nowrap;
@@ -170,10 +175,10 @@
 .platePill {
   display: flex;
   align-items: center;
-  gap: var(--space-s);
-  padding: var(--space-xs) var(--space-s);
-  border: 1px solid #333;
-  border-radius: var(--radius-xs);
+  gap: var(--space-s);          /* 8px — Figma: gap-[var(--s,8px)] */
+  padding: var(--space-xs) var(--space-s);  /* 4px 8px — Figma: py-[var(--xs,4px)] px-[var(--s,8px)] */
+  border: 1px solid #333;       /* Figma: border-[var(--surface-adjescent-2,#333)] */
+  border-radius: var(--radius-s); /* 4px — Figma: rounded-[var(--xs,4px)] */
   flex-shrink: 0;
 }
 
@@ -195,9 +200,9 @@
 
 .vehicleName {
   font-family: var(--font-family-primary);
-  font-weight: 600;
+  font-weight: 600;             /* Figma mobile: SemiBold */
   font-size: 16px;
-  line-height: var(--line-height-default);
+  line-height: 1.2;
   color: white;
   margin: 0;
   white-space: nowrap;
@@ -215,10 +220,11 @@
   border: none;
   background: none;
   border-radius: var(--radius-full);
-  padding: 0;
+  padding: 10px;                /* Figma: p-[10px] */
   cursor: pointer;
   color: white;
   font-size: 12px;
+  box-sizing: content-box;
   transition: background var(--transition-fast);
 }
 
@@ -245,17 +251,18 @@
 .pills {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-s);
+  gap: var(--space-s);          /* 8px — Figma: gap-[var(--s,8px)] */
   align-items: center;
+  width: 100%;
 }
 
 .pill {
   display: flex;
   align-items: center;
-  gap: var(--space-s);
-  padding: var(--space-xs) var(--space-s);
-  border: 1px solid #333;
-  border-radius: var(--radius-xs);
+  gap: var(--space-s);          /* 8px — Figma: gap-[var(--s,8px)] */
+  padding: var(--space-xs) var(--space-s);  /* 4px 8px */
+  border: 1px solid #333;       /* Figma: border-[var(--surface-adjescent-2,#333)] */
+  border-radius: var(--radius-s); /* 4px — Figma: rounded-[var(--xs,4px)] */
   flex-shrink: 0;
 }
 
@@ -276,7 +283,8 @@
 .checks {
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
+  gap: var(--space-s);          /* 8px — Figma: gap-[var(--s,8px)] */
+  width: 100%;
 }
 
 /* ── Single check row ─────────────────────────────────────── */
@@ -284,9 +292,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-xs) var(--space-s);
-  border-radius: var(--radius-xs);
-  background: #333;
+  padding: var(--space-xs) var(--space-s);  /* 4px 8px — Figma: py-[var(--xs,4px)] px-[var(--s,8px)] */
+  border-radius: var(--radius-s); /* 4px — Figma: rounded-[var(--xs,4px)] */
+  background: #333;             /* Figma: var(--surface-adjescent-2,#333) */
   width: 100%;
 }
 
@@ -306,7 +314,7 @@
 .checkLeft {
   display: flex;
   align-items: center;
-  gap: var(--space-s);
+  gap: var(--space-s);          /* 8px — Figma: gap-[var(--s,8px)] */
   min-width: 0;
 }
 
@@ -318,15 +326,17 @@
 .checkLabel {
   font-family: var(--font-family-primary);
   font-weight: 500;
-  font-size: 14px;
-  line-height: var(--line-height-default);
+  font-size: 14px;              /* Figma mobile: text-[14px] */
+  line-height: 1.2;
   color: white;
   white-space: nowrap;
 }
 
-/* Info button: --primary/300 = #4d4d4d */
+/* Info button: Figma color = var(--primary/300,#4d4d4d) */
 .infoBtn {
   flex-shrink: 0;
+  width: 13px;                  /* Figma: size-[12.75px] ≈ 13px */
+  height: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -343,7 +353,7 @@
   color: #808080;
 }
 
-/* Chevron: --accent-color/orange-600-primary = #f76803 */
+/* Chevron: Figma color = var(--accent-color/orange-600-primary,#f76803) */
 .checkChevron {
   font-size: 12px;
   flex-shrink: 0;
@@ -352,7 +362,7 @@
 
 /* ── Skeleton ─────────────────────────────────────────────── */
 .skeleton {
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-s); /* 4px */
   background: #333;
   animation: pulse 1.5s ease-in-out infinite;
 }
@@ -391,7 +401,7 @@
   .cardDark:not(.preTalonTop) .checks {
     width: 360px;
     flex-shrink: 0;
-    gap: var(--space-xs);
+    gap: var(--space-xs);       /* 4px — Figma desktop: gap-[var(--xs,4px)] */
   }
 
   /* Desktop: pre-talon top stays vertical */
@@ -399,10 +409,10 @@
     flex-direction: column;
   }
 
-  /* Desktop typography: h6 = 20px medium, check label = 16px */
+  /* Desktop typography */
   .vehicleName {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 500;           /* Figma desktop: Medium */
   }
 
   .logo {
@@ -411,15 +421,11 @@
   }
 
   .pillLabel {
-    font-size: 14px;
-  }
-
-  .pill {
-    line-height: var(--line-height-default);
+    font-size: 14px;            /* Figma desktop: text-[14px] */
   }
 
   .checkLabel {
-    font-size: 16px;
+    font-size: 16px;            /* Figma desktop: text-[16px] */
   }
 
   /* Desktop pre-talon checks: 2-col grid */
