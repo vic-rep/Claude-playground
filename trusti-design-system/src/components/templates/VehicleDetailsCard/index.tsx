@@ -2,27 +2,22 @@ import React, { useState } from 'react';
 import styles from './styles.module.css';
 
 /* Figma: ❖ Vehicle details card — page 3016:4264
-   Variants: VehicleCardV × Desktop/Mobile × talon/no-talon × skeleton/loaded
-   Mobile Pre-Talon:  node 3016:4257  (skeleton), node 3016:4263 (loaded — no talon, no skeleton)
-   Mobile Post-Talon: node 3016:4260  (skeleton), node 3016:4261 (loaded)
-   Desktop Pre-Talon: node 3016:4258  (skeleton), node 3016:4259 (loaded)
-   Desktop Post-Talon: node 3016:4262 (skeleton), node 3016:4256 (loaded)
+   Pre-talon loaded (mobile): node 3016:4263
+   Post-talon loaded (mobile): node 3016:4261
+   Desktop post-talon loaded: node 3016:4256
+   Pre-talon skeleton (mobile): node 3016:4257
+   Post-talon skeleton (mobile): node 3016:4260
 */
 
 export type CheckStatus = 'active' | 'inactive' | 'warning' | 'no-info';
 
 export interface ValidityCheck {
-  /** Unique identifier for the check */
   id: string;
-  /** Display label (e.g. "Гражданска отговорност", "Каско", "Винетка", "Глоби") */
   label: string;
-  /** Current status */
   status: CheckStatus;
-  /** Optional status text shown for warning state (e.g. "Имете 2 глоби неплатени глоби") */
+  /** Custom text for warning status (e.g. "Имете 2 глоби неплатени глоби") */
   statusText?: string;
-  /** Called when info (i) button is clicked */
   onInfo?: () => void;
-  /** Called when row is clicked / chevron tapped — navigates to detail */
   onNavigate?: () => void;
 }
 
@@ -40,25 +35,24 @@ export interface VehicleDetails {
 }
 
 export interface VehicleDetailsCardProps {
-  /**
-   * Vehicle data. When provided → post-talon state (dark bg, full details).
-   * When absent → pre-talon state (light bg, talon CTA).
-   */
+  /** When provided → post-talon state (full dark card). When absent → pre-talon. */
   vehicle?: VehicleDetails;
-  /** Validity checks to display (MTPL, Casco, Vignette, Fines, etc.) */
+  /** Validity checks (MTPL, Casco, Vignette, Fines, etc.) */
   checks?: ValidityCheck[];
   /** Show skeleton loading placeholders */
   loading?: boolean;
   /** Plate number shown in pre-talon header */
   plate?: string;
-  /** Called when cogwheel (edit) button is clicked (post-talon state) */
+  /** Called when cogwheel button is clicked (post-talon) */
   onEdit?: () => void;
-  /** Called when talon number is submitted (pre-talon state) */
+  /** Called when talon is submitted (pre-talon) */
   onTalonSubmit?: (talonNumber: string) => void;
+  /** Trusti logo URL for the CTA section */
+  trustiLogoUrl?: string;
   className?: string;
 }
 
-/* ── Status icon mapping ────────────────────────────────── */
+/* ── Status icon map (FA icon classes) ───────────────────── */
 const STATUS_ICON: Record<CheckStatus, string> = {
   active: 'fa-solid fa-circle-check',
   inactive: 'fa-solid fa-circle-xmark',
@@ -66,14 +60,20 @@ const STATUS_ICON: Record<CheckStatus, string> = {
   'no-info': 'fa-solid fa-circle-question',
 };
 
+/* Figma exact colors:
+   active:   --success/green-600 = #80c8a3
+   inactive: --destructive/red-500 = #ff8091
+   warning:  --warning/300 = #ff9d1f
+   no-info:  --primary/500 = #808080
+*/
 const STATUS_COLOR: Record<CheckStatus, string> = {
-  active: 'var(--color-success-600)',
-  inactive: '#D94040',
-  warning: 'var(--color-warning-600)',
-  'no-info': 'var(--text-tertiary)',
+  active: '#80c8a3',
+  inactive: '#ff8091',
+  warning: '#ff9d1f',
+  'no-info': '#808080',
 };
 
-/* ── Vehicle detail pill helper ──────────────────────────── */
+/* ── Vehicle detail pill data ────────────────────────────── */
 interface DetailPill {
   icon: string;
   label: string;
@@ -97,7 +97,7 @@ function SkeletonBar({ width = '100%', height = 24 }: { width?: string | number;
 
 function SkeletonCard({ hasTalon }: { hasTalon: boolean }) {
   return (
-    <div className={`${styles.card} ${hasTalon ? styles.postTalon : styles.preTalon}`}>
+    <div className={styles.cardDark}>
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           {hasTalon && <SkeletonBar width={24} height={24} />}
@@ -111,8 +111,6 @@ function SkeletonCard({ hasTalon }: { hasTalon: boolean }) {
           <SkeletonBar width={60} height={24} />
           <SkeletonBar width={60} height={24} />
           <SkeletonBar width={70} height={24} />
-          <SkeletonBar width={55} height={24} />
-          <SkeletonBar width={140} height={24} />
         </div>
       )}
       <div className={styles.checks}>
@@ -121,22 +119,17 @@ function SkeletonCard({ hasTalon }: { hasTalon: boolean }) {
         <SkeletonBar height={28} />
         <SkeletonBar height={28} />
       </div>
-      {!hasTalon && (
-        <div className={styles.talonCta}>
-          <SkeletonBar height={40} />
-        </div>
-      )}
     </div>
   );
 }
 
-/* ── Check row subcomponent ──────────────────────────────── */
-function CheckRow({ check, dark }: { check: ValidityCheck; dark: boolean }) {
-  const hasWarningText = check.status === 'warning' && check.statusText;
+/* ── Single check row ────────────────────────────────────── */
+function CheckRow({ check }: { check: ValidityCheck }) {
+  const isWarningWithText = check.status === 'warning' && check.statusText;
 
   return (
     <div
-      className={`${styles.checkRow} ${dark ? styles.checkRowDark : ''} ${hasWarningText ? styles.checkRowWarning : ''}`}
+      className={`${styles.checkRow} ${check.onNavigate ? styles.checkRowClickable : ''}`}
       role={check.onNavigate ? 'button' : undefined}
       tabIndex={check.onNavigate ? 0 : undefined}
       onClick={check.onNavigate}
@@ -144,12 +137,12 @@ function CheckRow({ check, dark }: { check: ValidityCheck; dark: boolean }) {
     >
       <div className={styles.checkLeft}>
         <i
-          className={`${STATUS_ICON[check.status]} ${styles.checkIcon}`}
+          className={`${STATUS_ICON[check.status]} ${styles.checkStatusIcon}`}
           style={{ color: STATUS_COLOR[check.status] }}
           aria-hidden="true"
         />
-        <span className={`${styles.checkLabel} ${dark ? styles.checkLabelDark : ''}`}>
-          {hasWarningText ? check.statusText : check.label}
+        <span className={styles.checkLabel}>
+          {isWarningWithText ? check.statusText : check.label}
         </span>
         {check.onInfo && (
           <button
@@ -163,7 +156,7 @@ function CheckRow({ check, dark }: { check: ValidityCheck; dark: boolean }) {
         )}
       </div>
       {check.onNavigate && (
-        <i className={`fa-regular fa-chevron-right ${styles.checkChevron} ${dark ? styles.checkChevronDark : ''}`} aria-hidden="true" />
+        <i className={`fa-regular fa-chevron-right ${styles.checkChevron}`} aria-hidden="true" />
       )}
     </div>
   );
@@ -177,6 +170,7 @@ export const VehicleDetailsCard: React.FC<VehicleDetailsCardProps> = ({
   plate,
   onEdit,
   onTalonSubmit,
+  trustiLogoUrl,
   className = '',
 }) => {
   const [talonInput, setTalonInput] = useState('');
@@ -196,56 +190,51 @@ export const VehicleDetailsCard: React.FC<VehicleDetailsCardProps> = ({
     }
   };
 
-  /* ── Post-Talon state ──────────────────────────────────── */
+  /* ── Post-Talon: single dark card ──────────────────────── */
   if (hasTalon) {
     const pills = getVehiclePills(vehicle);
     return (
-      <div className={`${styles.card} ${styles.postTalon} ${className}`}>
-        {/* Header: logo + name + cogwheel */}
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
-            {vehicle.logoUrl && (
-              <img
-                src={vehicle.logoUrl}
-                alt={`${vehicle.make} logo`}
-                className={styles.logo}
-              />
+      <div className={`${styles.cardDark} ${className}`}>
+        {/* Left column (on desktop) */}
+        <div className={styles.postTalonLeft}>
+          {/* Header: logo + name + cogwheel */}
+          <div className={styles.header}>
+            <div className={styles.headerLeft}>
+              {vehicle.logoUrl && (
+                <img src={vehicle.logoUrl} alt={`${vehicle.make} logo`} className={styles.logo} />
+              )}
+              <h3 className={styles.vehicleName}>
+                {vehicle.make} {vehicle.model} {vehicle.year}
+              </h3>
+            </div>
+            {onEdit && (
+              <button className={styles.cogBtn} onClick={onEdit} aria-label="Edit vehicle details" type="button">
+                <i className="fa-regular fa-gear" aria-hidden="true" />
+              </button>
             )}
-            <h3 className={styles.vehicleName}>
-              {vehicle.make} {vehicle.model} {vehicle.year}
-            </h3>
           </div>
-          {onEdit && (
-            <button
-              className={styles.cogBtn}
-              onClick={onEdit}
-              aria-label="Edit vehicle details"
-              type="button"
-            >
-              <i className="fa-regular fa-gear" aria-hidden="true" />
-            </button>
+
+          {/* Vehicle detail pills */}
+          {pills.length > 0 && (
+            <div className={styles.pills}>
+              {pills.map((pill, i) => (
+                <div key={i} className={styles.pill}>
+                  <i className={`${pill.icon} ${styles.pillIcon}`} aria-hidden="true" />
+                  <span className={styles.pillLabel}>{pill.label}</span>
+                </div>
+              ))}
+            </div>
           )}
         </div>
 
-        {/* Vehicle detail pills */}
-        {pills.length > 0 && (
-          <div className={styles.pills}>
-            {pills.map((pill, i) => (
-              <div key={i} className={styles.pill}>
-                <i className={`${pill.icon} ${styles.pillIcon}`} aria-hidden="true" />
-                <span className={styles.pillLabel}>{pill.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Divider (vertical on desktop, horizontal on mobile — handled in CSS) */}
+        {/* Divider (desktop only, rendered via CSS) */}
+        <div className={styles.divider} />
 
         {/* Validity checks */}
         {checks.length > 0 && (
           <div className={styles.checks}>
             {checks.map((check) => (
-              <CheckRow key={check.id} check={check} dark />
+              <CheckRow key={check.id} check={check} />
             ))}
           </div>
         )}
@@ -253,47 +242,61 @@ export const VehicleDetailsCard: React.FC<VehicleDetailsCardProps> = ({
     );
   }
 
-  /* ── Pre-Talon state ───────────────────────────────────── */
+  /* ── Pre-Talon: dark top + light bottom ────────────────── */
   return (
-    <div className={`${styles.card} ${styles.preTalon} ${className}`}>
-      {/* Header */}
-      <div className={styles.header}>
-        <h3 className={styles.preTalonTitle}>Резултати от проверката</h3>
-        {plate && (
-          <div className={styles.platePill}>
-            <span className={styles.plateText}>{plate}</span>
+    <div className={`${styles.preTalonWrapper} ${className}`}>
+      {/* ── Dark top section (header + checks) ───────────── */}
+      <div className={`${styles.cardDark} ${styles.preTalonTop}`}>
+        {/* Header */}
+        <div className={styles.header}>
+          <h3 className={styles.preTalonTitle}>Резултати от проверката</h3>
+          {plate && (
+            <div className={styles.platePill}>
+              <i className="fa-solid fa-car" style={{ fontSize: 12, color: 'white' }} aria-hidden="true" />
+              <span className={styles.plateText}>{plate}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Validity checks */}
+        {checks.length > 0 && (
+          <div className={styles.checks}>
+            {checks.map((check) => (
+              <CheckRow key={check.id} check={check} />
+            ))}
           </div>
         )}
       </div>
 
-      {/* Validity checks */}
-      {checks.length > 0 && (
-        <div className={styles.checks}>
-          {checks.map((check) => (
-            <CheckRow key={check.id} check={check} dark={false} />
-          ))}
-        </div>
-      )}
-
-      {/* Talon CTA */}
+      {/* ── Light bottom section (CTA) ───────────────────── */}
       {onTalonSubmit && (
         <div className={styles.talonCta}>
           <div className={styles.talonInfo}>
-            <i className={`fa-solid fa-circle-check ${styles.talonInfoIcon}`} aria-hidden="true" />
+            {trustiLogoUrl ? (
+              <div className={styles.talonLogoBadge}>
+                <img src={trustiLogoUrl} alt="Trusti" className={styles.talonLogoImg} />
+              </div>
+            ) : (
+              <div className={styles.talonLogoBadge}>
+                <i className="fa-solid fa-shield-check" style={{ fontSize: 16, color: 'var(--interactive-primary)' }} aria-hidden="true" />
+              </div>
+            )}
             <p className={styles.talonInfoText}>
               Проверете всички задължения свързани с автомобила си с Trusti AI Брокер.
             </p>
           </div>
           <div className={styles.talonForm}>
-            <input
-              type="text"
-              className={styles.talonInput}
-              placeholder="Въведете номер на талона"
-              value={talonInput}
-              onChange={(e) => setTalonInput(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleTalonSubmit(); }}
-              aria-label="Talon number"
-            />
+            <div className={styles.talonInputWrap}>
+              <input
+                type="text"
+                className={styles.talonInput}
+                placeholder="Номер на талон"
+                value={talonInput}
+                onChange={(e) => setTalonInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleTalonSubmit(); }}
+                aria-label="Talon number"
+              />
+            </div>
             <button
               className={styles.talonSubmit}
               onClick={handleTalonSubmit}
