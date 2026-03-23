@@ -1,11 +1,384 @@
-.card { background: var(--bg-card); border: 1px solid var(--border-default); border-radius: var(--radius-l); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-m); }
-.header { display: flex; justify-content: space-between; align-items: flex-start; }
-.info { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-s); }
-.title { font-size: var(--font-size-text-default); font-weight: 600; color: var(--text-primary); }
-.year { font-size: var(--font-size-text-small); color: var(--text-tertiary); }
-.verified { font-size: var(--font-size-text-small); color: var(--color-success-700); font-weight: 500; }
-.editBtn { font-size: var(--font-size-text-small); font-weight: 600; color: var(--interactive-primary); padding: var(--space-xs) var(--space-s); border-radius: var(--radius-s); transition: background var(--transition-fast); }
-.editBtn:hover { background: var(--interactive-subtle); }
-.detail { display: flex; justify-content: space-between; padding: var(--space-s) 0; border-top: 1px solid var(--border-default); }
-.label { font-size: var(--font-size-text-small); color: var(--text-secondary); }
-.value { font-size: var(--font-size-text-small); font-weight: 500; color: var(--text-primary); }
+/* ═══════════════════════════════════════════════════════════
+   VehicleDetailsCard — Figma node 3016:4264
+   Two states: Pre-Talon (light) and Post-Talon (dark #191919).
+   Responsive: mobile < 768px, desktop ≥ 768px.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Card container ───────────────────────────────────────── */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding: var(--space-m);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ── Pre-Talon (light) ────────────────────────────────────── */
+.preTalon {
+  background: var(--color-surface-adjacent);
+}
+
+/* ── Post-Talon (always dark, regardless of theme) ────────── */
+.postTalon {
+  background: #191919;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-width: 0;
+}
+
+/* ── Post-Talon header ────────────────────────────────────── */
+.logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.vehicleName {
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: var(--line-height-default);
+  color: white;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cogBtn {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  border-radius: var(--radius-full);
+  padding: 0;
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  transition: background var(--transition-fast);
+}
+
+.cogBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cogBtn:focus-visible {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+}
+
+/* ── Pre-Talon header ─────────────────────────────────────── */
+.preTalonTitle {
+  font-family: var(--font-family-primary);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: var(--line-height-default);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.platePill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-xs) var(--space-s);
+  border: 1px solid var(--color-surface-adjacent2);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+.plateText {
+  font-family: var(--font-family-primary);
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+/* ── Vehicle detail pills (post-talon) ────────────────────── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  align-items: center;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-xs) var(--space-s);
+  border: 1px solid #333;
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+.pillIcon {
+  font-size: 12px;
+  color: white;
+}
+
+.pillLabel {
+  font-family: var(--font-family-primary);
+  font-size: 12px;
+  line-height: 1.3;
+  color: white;
+}
+
+/* ── Validity checks ──────────────────────────────────────── */
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* ── Check row ────────────────────────────────────────────── */
+.checkRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xs) var(--space-s);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface-adjacent2);
+  min-height: 28px;
+  transition: background var(--transition-fast);
+}
+
+.checkRow[role='button'] {
+  cursor: pointer;
+}
+
+.checkRow[role='button']:hover {
+  opacity: 0.85;
+}
+
+.checkRow:focus-visible {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+}
+
+.checkRowDark {
+  background: #333;
+}
+
+.checkLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-width: 0;
+}
+
+.checkIcon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.checkLabel {
+  font-family: var(--font-family-primary);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: var(--line-height-default);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checkLabelDark {
+  color: white;
+}
+
+.infoBtn {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  transition: color var(--transition-fast);
+}
+
+.infoBtn:hover {
+  color: var(--text-secondary);
+}
+
+.checkChevron {
+  font-size: 12px;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+.checkChevronDark {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Talon CTA (pre-talon only) ───────────────────────────── */
+.talonCta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.talonInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-s);
+}
+
+.talonInfoIcon {
+  font-size: 16px;
+  color: var(--interactive-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.talonInfoText {
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.talonForm {
+  display: flex;
+  gap: var(--space-s);
+  align-items: stretch;
+}
+
+.talonInput {
+  flex: 1;
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  padding: var(--space-s) var(--space-m);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-s);
+  background: var(--color-surface-adjacent);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.talonInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+.talonInput:focus {
+  border-color: var(--interactive-primary);
+}
+
+.talonSubmit {
+  flex-shrink: 0;
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  font-size: 14px;
+  padding: var(--space-s) var(--space-l);
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--interactive-primary);
+  color: var(--color-constant-white);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.talonSubmit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.talonSubmit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.talonSubmit:focus-visible {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+}
+
+/* ── Skeleton ─────────────────────────────────────────────── */
+.skeleton {
+  border-radius: var(--radius-xs);
+  background: var(--color-surface-adjacent2);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.postTalon .skeleton {
+  background: #333;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Desktop (≥ 768px) overrides
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .vehicleName {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  /* Desktop post-talon: horizontal layout */
+  .postTalon {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-m);
+  }
+
+  .postTalon .header {
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+
+  .postTalon .pills {
+    flex-shrink: 0;
+  }
+
+  .postTalon .checks {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Desktop pre-talon: checks in 2-col grid */
+  .preTalon .checks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-s);
+  }
+
+  .pillLabel {
+    font-size: 14px;
+  }
+}

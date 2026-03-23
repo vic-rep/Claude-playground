@@ -88,7 +88,7 @@ export { Footer } from './components/templates/Footer';
 export type { FooterProps, FooterColumn } from './components/templates/Footer';
 
 export { VehicleDetailsCard } from './components/templates/VehicleDetailsCard';
-export type { VehicleDetailsCardProps, VehicleDetails } from './components/templates/VehicleDetailsCard';
+export type { VehicleDetailsCardProps, VehicleDetails, ValidityCheck, CheckStatus } from './components/templates/VehicleDetailsCard';
 
 export { Cart } from './components/templates/Cart';
 export type { CartProps, CartItem } from './components/templates/Cart';

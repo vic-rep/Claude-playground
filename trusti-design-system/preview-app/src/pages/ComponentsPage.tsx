@@ -26,7 +26,7 @@ import {
   getLogosByCategory,
   getLogoCategories,
 } from '@trusti/design-system';
-import type { LogoCategory } from '@trusti/design-system';
+import type { LogoCategory, ValidityCheck } from '@trusti/design-system';
 
 /* ─────────────────────────────────────────────────────────
    Helpers
@@ -578,20 +578,48 @@ function CarouselDemo() {
 }
 
 function VehicleDetailsCardDemo() {
+  const [talonSubmitted, setTalonSubmitted] = useState(false);
+
+  const sampleChecks: ValidityCheck[] = [
+    { id: 'mtpl', label: 'Гражданска отговорност', status: 'active', onInfo: () => alert('MTPL info'), onNavigate: () => {} },
+    { id: 'casco', label: 'Каско', status: 'no-info', onInfo: () => alert('Casco info'), onNavigate: () => {} },
+    { id: 'vignette', label: 'Винетка', status: 'inactive', onNavigate: () => {} },
+    { id: 'fines', label: 'Глоби', status: 'warning', statusText: 'Имете 2 неплатени глоби', onInfo: () => alert('Fines info') },
+  ];
+
   return (
-    <Section title="VehicleDetailsCard" desc="Vehicle display card with make, model, year, plate, and talon info.">
-      <div style={{ maxWidth: 400 }}>
+    <Section title="VehicleDetailsCard" desc="Displays vehicle data and service validity checks. Pre-talon (light, talon CTA) and post-talon (dark, full details) states.">
+      <h4 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', margin: '0 0 8px' }}>Pre-Talon State</h4>
+      <div style={{ maxWidth: 500 }}>
+        <VehicleDetailsCard
+          plate="EA 1234 CB"
+          checks={sampleChecks}
+          onTalonSubmit={(talon) => { setTalonSubmitted(true); alert(`Talon submitted: ${talon}`); }}
+        />
+      </div>
+
+      <h4 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', margin: '24px 0 8px' }}>Post-Talon State</h4>
+      <div style={{ maxWidth: 500 }}>
         <VehicleDetailsCard
           vehicle={{
-            make: 'Toyota',
-            model: 'Corolla',
-            year: 2023,
-            plate: 'CB 1234 AB',
-            talonNumber: 'T-987654',
+            make: 'BMW',
+            model: '3 Series',
+            year: 2016,
+            plate: 'EA 1234 CB',
+            fuelType: 'Дизел',
+            engineSize: '2.0 л.',
+            horsepower: '190 к.с.',
+            steeringWheel: 'Десен',
+            usageType: 'Такси',
           }}
-          showTalon
-          verified
+          checks={sampleChecks}
+          onEdit={() => alert('Edit vehicle details')}
         />
+      </div>
+
+      <h4 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', margin: '24px 0 8px' }}>Loading State</h4>
+      <div style={{ maxWidth: 500 }}>
+        <VehicleDetailsCard loading />
       </div>
     </Section>
   );
