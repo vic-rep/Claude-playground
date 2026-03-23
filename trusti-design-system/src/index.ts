@@ -72,7 +72,7 @@ export { Modal } from './components/organisms/Modal';
 export type { ModalProps, ModalSize } from './components/organisms/Modal';
 
 export { Drawer } from './components/organisms/Drawer';
-export type { DrawerProps, DrawerPosition } from './components/organisms/Drawer';
+export type { DrawerProps, DrawerVariant } from './components/organisms/Drawer';
 
 export { Accordion } from './components/organisms/Accordion';
 export type { AccordionProps, AccordionItem } from './components/organisms/Accordion';

@@ -466,17 +466,38 @@ function AccordionDemo() {
 }
 
 function DrawerDemo() {
-  const [open, setOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [actionOpen, setActionOpen] = useState(false);
   return (
-    <Section title="Drawer" desc="Side panel modal with left, right, or bottom positioning.">
-      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
-      <Drawer open={open} onClose={() => setOpen(false)} title="Drawer Title" position="right">
-        <p style={{ fontSize: 14, color: 'var(--color-primary-600)' }}>
-          This is the drawer content. It slides in from the side.
+    <Section title="Drawer" desc="Panel that slides from screen edge. Info variant (right) for display, Action variant (bottom on mobile, right on desktop) for interactions.">
+      <div style={{ display: 'flex', gap: 'var(--space-m)', flexWrap: 'wrap' }}>
+        <Button onClick={() => setInfoOpen(true)}>Info Drawer</Button>
+        <Button variant="secondary" onClick={() => setActionOpen(true)}>Action Drawer</Button>
+      </div>
+      <Drawer open={infoOpen} onClose={() => setInfoOpen(false)} variant="info" title="Policy Details">
+        <p style={{ fontSize: 14, color: 'var(--color-primary-600)', lineHeight: 1.5 }}>
+          This is an informative drawer for displaying details without actions. On mobile it slides from the right (max 300px), on desktop it slides from the right (480px).
         </p>
-        <div style={{ marginTop: 16 }}>
-          <Button variant="primary" onClick={() => setOpen(false)}>Close</Button>
+        <div style={{ marginTop: 16, padding: 16, background: 'var(--color-primary-100)', borderRadius: 'var(--radius-m)' }}>
+          <p style={{ fontSize: 13, color: 'var(--color-primary-700)', margin: 0 }}>Overlay: #191919 at 25% opacity. Tap overlay or press X to close.</p>
         </div>
+      </Drawer>
+      <Drawer
+        open={actionOpen}
+        onClose={() => setActionOpen(false)}
+        variant="action"
+        title="Complete Purchase"
+        notch
+        footer={
+          <div style={{ display: 'flex', gap: 'var(--space-s)', justifyContent: 'flex-end' }}>
+            <Button variant="secondary" onClick={() => setActionOpen(false)}>Cancel</Button>
+            <Button variant="primary" onClick={() => setActionOpen(false)}>Confirm</Button>
+          </div>
+        }
+      >
+        <p style={{ fontSize: 14, color: 'var(--color-primary-600)', lineHeight: 1.5 }}>
+          This is an actionable drawer for forms and CTAs. On mobile it slides up from the bottom (max 600px) with an optional drag notch. On desktop it slides from the right.
+        </p>
       </Drawer>
     </Section>
   );

@@ -1,23 +1,260 @@
+/* ═══════════════════════════════════════════════════════════
+   Drawer — Figma node 4032:12225
+   Responsive panel that slides from edge of screen.
+   Mobile info: right → left | Mobile action: bottom → top
+   Desktop: right → left
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Easing — from Figma spec ─────────────────────────────── */
+:root {
+  --drawer-easing: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ── Overlay ──────────────────────────────────────────────── */
 .overlay {
-  position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.4);
-  animation: fadeIn 200ms ease;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  /* Spec: #191919 at 25% opacity */
+  background: rgba(25, 25, 25, 0.25);
+  animation: fadeIn 200ms ease forwards;
 }
+
+.overlayClosing {
+  animation: fadeOut 200ms ease forwards;
+}
+
+/* ── Drawer panel ─────────────────────────────────────────── */
 .drawer {
-  position: fixed; background: var(--bg-card); box-shadow: var(--elevation-level5);
-  display: flex; flex-direction: column; overflow: hidden; z-index: 101;
+  position: fixed;
+  background: var(--color-surface-adjacent);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 101;
+  /* Figma: Fixed element/Shadow level 1 (upward shadow for drawers) */
+  box-shadow:
+    0px -2px 4px 0px rgba(0, 0, 0, 0.04),
+    0px -8px 8px 0px rgba(0, 0, 0, 0.03),
+    0px -17px 10px 0px rgba(0, 0, 0, 0.02),
+    0px -31px 12px 0px rgba(0, 0, 0, 0.01),
+    0px -48px 13px 0px rgba(0, 0, 0, 0);
 }
-.right { top: 0; right: 0; height: 100vh; animation: slideInRight 250ms ease; }
-.left { top: 0; left: 0; height: 100vh; animation: slideInLeft 250ms ease; }
-.bottom { bottom: 0; left: 0; width: 100vw; border-radius: var(--radius-l) var(--radius-l) 0 0; animation: slideInUp 250ms ease; }
+
+/* ── Position: right (info on mobile, all on desktop) ─────── */
+.right {
+  top: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ── Position: bottom (action on mobile only) ─────────────── */
+.bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ── Size variants ────────────────────────────────────────── */
+.mobileInfo {
+  max-width: 300px;
+  width: 300px;
+  padding: 20px;
+}
+
+.mobileAction {
+  max-width: 600px;
+  width: 100%;
+  max-height: 600px;
+  padding: 20px;
+}
+
+.desktop {
+  width: 480px;
+  padding: 24px;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
 .header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-l) var(--space-xl); border-bottom: 1px solid var(--border-default); flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+  flex-shrink: 0;
+  margin-bottom: var(--space-xl);
 }
-.title { font-size: var(--font-size-h6); font-weight: 600; }
-.close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-s); color: var(--text-secondary); }
-.close:hover { background: var(--color-primary-100); }
-.body { flex: 1; overflow-y: auto; padding: var(--space-xl); }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
-@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-@keyframes slideInUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+.title {
+  flex: 1 1 0;
+  font-family: var(--font-family-primary);
+  font-weight: 500;
+  line-height: var(--line-height-default);
+  color: var(--text-primary);
+  margin: 0;
+  min-width: 0;
+}
+
+/* Mobile title: 18px, Desktop title: 24px */
+.mobileInfo .title,
+.mobileAction .title {
+  font-size: 18px;
+}
+
+.desktop .title {
+  font-size: 24px;
+}
+
+/* ── Close button ─────────────────────────────────────────── */
+.close {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  border-radius: var(--radius-full);
+  padding: 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 16px;
+  transition: background var(--transition-fast);
+}
+
+.close:hover {
+  background: var(--color-primary-100);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--interactive-primary);
+  outline-offset: 2px;
+}
+
+/* ── Body ─────────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* When notch is present on mobile action, reduce bottom padding */
+.bodyWithNotch {
+  padding-bottom: 4px;
+}
+
+/* ── Notch (mobile actionable drag handle) ────────────────── */
+.notchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.notch {
+  width: 30px;
+  height: 3px;
+  border-radius: 10px;
+  background: var(--color-surface-adjacent2);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.footerDivider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-default);
+}
+
+.footerContent {
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animations — per spec motion table
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Speed classes ────────────────────────────────────────── */
+.speedMobileInfo   { animation-duration: 480ms; }
+.speedMobileAction { animation-duration: 480ms; }
+.speedMobileActionClose { animation-duration: 240ms; }
+.speedDesktop      { animation-duration: 600ms; }
+
+/* ── Slide in/out from right ──────────────────────────────── */
+.slideInRight {
+  animation-name: slideInRight;
+  animation-timing-function: var(--drawer-easing);
+  animation-fill-mode: forwards;
+}
+
+.slideOutRight {
+  animation-name: slideOutRight;
+  animation-timing-function: var(--drawer-easing);
+  animation-fill-mode: forwards;
+}
+
+/* ── Slide in/out from bottom ─────────────────────────────── */
+.slideInUp {
+  animation-name: slideInUp;
+  animation-timing-function: var(--drawer-easing);
+  animation-fill-mode: forwards;
+}
+
+.slideOutDown {
+  animation-name: slideOutDown;
+  animation-timing-function: var(--drawer-easing);
+  animation-fill-mode: forwards;
+}
+
+/* ── Keyframes ────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes slideInUp {
+  from { transform: translate(-50%, 100%); }
+  to   { transform: translate(-50%, 0); }
+}
+
+@keyframes slideOutDown {
+  from { transform: translate(-50%, 0); }
+  to   { transform: translate(-50%, 100%); }
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlayClosing,
+  .slideInRight,
+  .slideOutRight,
+  .slideInUp,
+  .slideOutDown {
+    animation-duration: 0ms !important;
+  }
+}
